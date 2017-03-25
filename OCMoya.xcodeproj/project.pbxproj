@@ -14,6 +14,7 @@
 		53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */; };
 		53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */; };
 		53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */; };
+		B692D0C88D294F23074E8B85 /* libPods-OCMoya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF369246F8A387F79980D11E /* libPods-OCMoya.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,9 @@
 		53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMoya+AFNetworing.h"; sourceTree = "<group>"; };
 		53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMoya+AFNetworing.m"; sourceTree = "<group>"; };
 		53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMTargetType.h; sourceTree = "<group>"; };
+		884539E1C8E251A3AD162F76 /* Pods-OCMoya.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.debug.xcconfig"; sourceTree = "<group>"; };
+		BF369246F8A387F79980D11E /* libPods-OCMoya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCMoya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F726CCD57226CBF616EB6100 /* Pods-OCMoya.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.release.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B692D0C88D294F23074E8B85 /* libPods-OCMoya.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		321894689C34E40C5A8BE69F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				884539E1C8E251A3AD162F76 /* Pods-OCMoya.debug.xcconfig */,
+				F726CCD57226CBF616EB6100 /* Pods-OCMoya.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4015D7C9CB0CC3C2FAD4FFCB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF369246F8A387F79980D11E /* libPods-OCMoya.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		53CFE4D01E8618A40051EE07 = {
 			isa = PBXGroup;
 			children = (
 				53CFE4DC1E8618A40051EE07 /* OCMoya */,
 				53CFE4DB1E8618A40051EE07 /* Products */,
+				321894689C34E40C5A8BE69F /* Pods */,
+				4015D7C9CB0CC3C2FAD4FFCB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,10 +116,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53CFE4E21E8618A40051EE07 /* Build configuration list for PBXNativeTarget "OCMoya" */;
 			buildPhases = (
+				04F5C20AD4477E1052C20442 /* [CP] Check Pods Manifest.lock */,
 				53CFE4D51E8618A40051EE07 /* Sources */,
 				53CFE4D61E8618A40051EE07 /* Frameworks */,
 				53CFE4D71E8618A40051EE07 /* Headers */,
 				53CFE4D81E8618A40051EE07 /* Resources */,
+				40026D0012AA903604E90E0C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,6 +174,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04F5C20AD4477E1052C20442 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		40026D0012AA903604E90E0C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		53CFE4D51E8618A40051EE07 /* Sources */ = {
@@ -260,6 +319,7 @@
 		};
 		53CFE4E31E8618A40051EE07 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 884539E1C8E251A3AD162F76 /* Pods-OCMoya.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -278,6 +338,7 @@
 		};
 		53CFE4E41E8618A40051EE07 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F726CCD57226CBF616EB6100 /* Pods-OCMoya.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
