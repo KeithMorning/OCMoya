@@ -8,12 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		53CFE4DF1E8618A40051EE07 /* OCMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4DD1E8618A40051EE07 /* OCMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		53CFE4EB1E8618D00051EE07 /* OCMDefination.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E51E8618D00051EE07 /* OCMDefination.h */; };
+		53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */; };
+		53CFE4ED1E8618D00051EE07 /* OCMEndpoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */; };
+		53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */; };
+		53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */; };
+		53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		53CFE4DA1E8618A40051EE07 /* OCMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CFE4DD1E8618A40051EE07 /* OCMoya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCMoya.h; sourceTree = "<group>"; };
 		53CFE4DE1E8618A40051EE07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53CFE4E51E8618D00051EE07 /* OCMDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMDefination.h; sourceTree = "<group>"; };
+		53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMEndpoint.h; sourceTree = "<group>"; };
+		53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMEndpoint.m; sourceTree = "<group>"; };
+		53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMoya+AFNetworing.h"; sourceTree = "<group>"; };
+		53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMoya+AFNetworing.m"; sourceTree = "<group>"; };
+		53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMTargetType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +58,12 @@
 		53CFE4DC1E8618A40051EE07 /* OCMoya */ = {
 			isa = PBXGroup;
 			children = (
+				53CFE4E51E8618D00051EE07 /* OCMDefination.h */,
+				53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */,
+				53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */,
+				53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */,
+				53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */,
+				53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */,
 				53CFE4DD1E8618A40051EE07 /* OCMoya.h */,
 				53CFE4DE1E8618A40051EE07 /* Info.plist */,
 			);
@@ -60,6 +78,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				53CFE4DF1E8618A40051EE07 /* OCMoya.h in Headers */,
+				53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */,
+				53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */,
+				53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */,
+				53CFE4EB1E8618D00051EE07 /* OCMDefination.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +154,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */,
+				53CFE4ED1E8618D00051EE07 /* OCMEndpoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

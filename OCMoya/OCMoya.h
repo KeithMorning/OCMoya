@@ -2,8 +2,8 @@
 //  OCMoya.h
 //  OCMoya
 //
-//  Created by keith on 25/03/2017.
-//  Copyright © 2017 keithxi. All rights reserved.
+//  Created by KeithXi on 23/03/2017.
+//  Copyright © 2017 KeithXi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
