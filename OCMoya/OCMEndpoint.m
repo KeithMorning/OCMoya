@@ -9,6 +9,7 @@
 #import "OCMEndpoint.h"
 #import "OCMoyaConfig.h"
 #import "AFHTTPRequestSerializer+OCMSerializer.h"
+#import "OCMDefination.h"
 
 @implementation OCMEndpointSampleResponse
 @end
@@ -149,7 +150,7 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     request.HTTPMethod = [OCMoyaConfig getHTTPOCMMethod:self.method];
     request.allHTTPHeaderFields = self.httpHeaderFields;
     
-    id<AFURLRequestSerialization> serializer = [[AFHTTPRequestSerializer alloc] initWithType:self.parameterEncoding];
+    id<OCMURLRequestSerialization> serializer = [[OCMHTTPRequestSerializer alloc] initWithType:self.parameterEncoding];
     NSError *error;
     NSURLRequest *newRequest = [serializer requestBySerializingRequest:request withParameters:self.parameters error:&error];
     

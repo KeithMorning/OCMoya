@@ -6,6 +6,10 @@
 //  Copyright © 2017 KeithXi. All rights reserved.
 //
 
+
+#import <Foundation/Foundation.h>
+#import <AFNetworking/AFNetworking.h>
+
 #if  TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
 #import <UIKit/UIKit.h>
 typedef UIImage OCMImageType;
@@ -16,10 +20,25 @@ typedef NSImage OCMImageType;
 
 typedef OCMImageType OCMImage;
 
+#pragma mark - Defind AFNetworking
+
+
+#define OCMURLRequestSerialization AFURLRequestSerialization
+#define OCMMultipartFormData AFMultipartFormData
+
+typedef AFHTTPRequestSerializer OCMHTTPRequestSerializer;
+
+typedef AFHTTPSessionManager OCMSessionManager;
+
+typedef AFJSONRequestSerializer OCMJSONRequestSerializer;
+
+typedef AFPropertyListRequestSerializer OCMPropertyListRequestSerializer;
+
+typedef AFXMLParserResponseSerializer OCMXMLParserResponseSerializer;
+
 #ifndef OCMDefination_h
 #define OCMDefination_h
 
-#import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, OCMMethod) {
     OCMMethodGET,
