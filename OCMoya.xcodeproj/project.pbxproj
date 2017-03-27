@@ -14,6 +14,14 @@
 		53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */; };
 		53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */; };
 		53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */; };
+		53DDA7CA1E87679300490C16 /* OCMoyaConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 53DDA7C81E87679300490C16 /* OCMoyaConfig.h */; };
+		53DDA7CB1E87679300490C16 /* OCMoyaConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7C91E87679300490C16 /* OCMoyaConfig.m */; };
+		53DDA7D21E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 53DDA7D01E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h */; };
+		53DDA7D31E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7D11E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m */; };
+		53DDA7D81E87C44700490C16 /* OCMoyaTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 53DDA7D61E87C44700490C16 /* OCMoyaTask.h */; };
+		53DDA7D91E87C44700490C16 /* OCMoyaTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7D71E87C44700490C16 /* OCMoyaTask.m */; };
+		53DDA7DD1E87C7F000490C16 /* OCMUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 53DDA7DB1E87C7F000490C16 /* OCMUploadTask.h */; };
+		53DDA7DE1E87C7F000490C16 /* OCMUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7DC1E87C7F000490C16 /* OCMUploadTask.m */; };
 		B692D0C88D294F23074E8B85 /* libPods-OCMoya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF369246F8A387F79980D11E /* libPods-OCMoya.a */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +35,14 @@
 		53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMoya+AFNetworing.h"; sourceTree = "<group>"; };
 		53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMoya+AFNetworing.m"; sourceTree = "<group>"; };
 		53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMTargetType.h; sourceTree = "<group>"; };
+		53DDA7C81E87679300490C16 /* OCMoyaConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMoyaConfig.h; sourceTree = "<group>"; };
+		53DDA7C91E87679300490C16 /* OCMoyaConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMoyaConfig.m; sourceTree = "<group>"; };
+		53DDA7D01E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestSerializer+OCMSerializer.h"; sourceTree = "<group>"; };
+		53DDA7D11E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestSerializer+OCMSerializer.m"; sourceTree = "<group>"; };
+		53DDA7D61E87C44700490C16 /* OCMoyaTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMoyaTask.h; sourceTree = "<group>"; };
+		53DDA7D71E87C44700490C16 /* OCMoyaTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMoyaTask.m; sourceTree = "<group>"; };
+		53DDA7DB1E87C7F000490C16 /* OCMUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMUploadTask.h; sourceTree = "<group>"; };
+		53DDA7DC1E87C7F000490C16 /* OCMUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMUploadTask.m; sourceTree = "<group>"; };
 		884539E1C8E251A3AD162F76 /* Pods-OCMoya.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.debug.xcconfig"; sourceTree = "<group>"; };
 		BF369246F8A387F79980D11E /* libPods-OCMoya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCMoya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F726CCD57226CBF616EB6100 /* Pods-OCMoya.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.release.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +98,11 @@
 		53CFE4DC1E8618A40051EE07 /* OCMoya */ = {
 			isa = PBXGroup;
 			children = (
+				53DDA7D51E87C3F200490C16 /* OCMInterface */,
+				53DDA7D41E87839200490C16 /* Catergory */,
 				53CFE4E51E8618D00051EE07 /* OCMDefination.h */,
+				53DDA7C81E87679300490C16 /* OCMoyaConfig.h */,
+				53DDA7C91E87679300490C16 /* OCMoyaConfig.m */,
 				53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */,
 				53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */,
 				53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */,
@@ -94,6 +114,34 @@
 			path = OCMoya;
 			sourceTree = "<group>";
 		};
+		53DDA7D41E87839200490C16 /* Catergory */ = {
+			isa = PBXGroup;
+			children = (
+				53DDA7D01E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h */,
+				53DDA7D11E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m */,
+			);
+			name = Catergory;
+			sourceTree = "<group>";
+		};
+		53DDA7D51E87C3F200490C16 /* OCMInterface */ = {
+			isa = PBXGroup;
+			children = (
+				53DDA7DA1E87C7C800490C16 /* OCMTask */,
+			);
+			name = OCMInterface;
+			sourceTree = "<group>";
+		};
+		53DDA7DA1E87C7C800490C16 /* OCMTask */ = {
+			isa = PBXGroup;
+			children = (
+				53DDA7D61E87C44700490C16 /* OCMoyaTask.h */,
+				53DDA7D71E87C44700490C16 /* OCMoyaTask.m */,
+				53DDA7DB1E87C7F000490C16 /* OCMUploadTask.h */,
+				53DDA7DC1E87C7F000490C16 /* OCMUploadTask.m */,
+			);
+			name = OCMTask;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -101,9 +149,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53DDA7CA1E87679300490C16 /* OCMoyaConfig.h in Headers */,
+				53DDA7D21E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h in Headers */,
 				53CFE4DF1E8618A40051EE07 /* OCMoya.h in Headers */,
 				53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */,
 				53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */,
+				53DDA7D81E87C44700490C16 /* OCMoyaTask.h in Headers */,
+				53DDA7DD1E87C7F000490C16 /* OCMUploadTask.h in Headers */,
 				53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */,
 				53CFE4EB1E8618D00051EE07 /* OCMDefination.h in Headers */,
 			);
@@ -213,8 +265,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53DDA7D31E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m in Sources */,
 				53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */,
+				53DDA7CB1E87679300490C16 /* OCMoyaConfig.m in Sources */,
+				53DDA7DE1E87C7F000490C16 /* OCMUploadTask.m in Sources */,
 				53CFE4ED1E8618D00051EE07 /* OCMEndpoint.m in Sources */,
+				53DDA7D91E87C44700490C16 /* OCMoyaTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +430,7 @@
 				53CFE4E41E8618A40051EE07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

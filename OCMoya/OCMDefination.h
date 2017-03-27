@@ -20,8 +20,8 @@ typedef NS_ENUM(NSUInteger, OCMMethod) {
 };
 
 typedef NS_ENUM(NSUInteger, OCMParameterEncoding) {
-    OCMParameterEncodingJSON,
     OCMParameterEncodingURL,
+    OCMParameterEncodingJSON,
     OCMParameterEncodingPropertyList,
 };
 

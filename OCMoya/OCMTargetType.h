@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
+#import "OCMoyaTask.h"
 
 @protocol OCMTargetType <NSObject>
 
@@ -26,7 +27,7 @@
 
 @property (nonatomic,copy,readonly) NSData *sampleData;
 
-@property (nonatomic,assign,readonly) OCMTaskType taskType;
+@property (nonatomic,strong,readonly) OCMoyaTask *taskType;
 
 @property (nonatomic,assign,readonly) BOOL validate;
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OCMTargetType.h"
+#import "OCMoyaTask.h"
 
 @interface OCMEndpointSampleResponse : NSObject
 
@@ -20,7 +21,8 @@
 @end
 
 typedef OCMEndpointSampleResponse*(^OCMEndpointSampleResponseClosure)(void);
-
+typedef NSDictionary<NSString *,id> parameterType;
+typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
 @interface OCMEndpoint : NSObject
 
@@ -30,11 +32,13 @@ typedef OCMEndpointSampleResponse*(^OCMEndpointSampleResponseClosure)(void);
 
 @property (nonatomic,copy,readonly) OCMEndpointSampleResponseClosure sampleResponseClosure;
 
-@property (nonatomic,copy,readonly) NSDictionary<NSString *,id> *parameters;
+@property (nonatomic,copy,readonly) parameterType *parameters;
 
 @property (nonatomic,assign,readonly) OCMParameterEncoding parameterEncoding;
 
-@property (nonatomic,copy,readonly) NSDictionary<NSString *,NSString *> *httpHeaderFields;
+@property (nonatomic,copy,readonly) httpHeaderType *httpHeaderFields;
+
+@property (nonatomic,strong,readonly) NSURLRequest *urlRequest;
 
 - (instancetype)initWithURL:(nonnull NSString *)url
       sampleResponseClosure:(nullable OCMEndpointSampleResponseClosure)closure
@@ -42,5 +46,14 @@ typedef OCMEndpointSampleResponse*(^OCMEndpointSampleResponseClosure)(void);
                  parameters:(nullable NSDictionary<NSString *,NSString *> *)parameters
           parameterEncoding:(OCMParameterEncoding)encoding
            httpHeaderFields:(nullable NSDictionary<NSString *,NSString *> *)httpHeaderFields;
+
+- (nonnull OCMEndpoint *)addingParameter:(nullable parameterType *)newparameter;
+
+- (nonnull OCMEndpoint *)addingHttpHeaderFields:(nullable httpHeaderType *)httpHeaderFields;
+
+- (nonnull OCMEndpoint *)addingParameters:(nullable parameterType *)parameters
+                         httpHeaderFields:(nullable httpHeaderType *)httpHeaders
+                        parameterEncoding:(OCMParameterEncoding)encoding;
+
 
 @end
