@@ -37,9 +37,6 @@ NSString *const OCMoyaErrorDomain = @"com.moya.netService";
         case OCMoyaErrorTypeJsonMapping:
             return @"Failed to map data to JSON.";
             break;
-
-            return @"";
-            break;
         case OCMoyaErrorTypeStringMapping:
             return @"Failed to map data to a String.";
             break;
