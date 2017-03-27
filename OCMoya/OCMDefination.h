@@ -6,6 +6,16 @@
 //  Copyright © 2017 KeithXi. All rights reserved.
 //
 
+#if  TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#import <UIKit/UIKit.h>
+typedef UIImage OCMImageType;
+#elif TARGET_OS_MAC
+#import <AppKit/AppKit.h>
+typedef NSImage OCMImageType;
+#endif
+
+typedef OCMImageType OCMImage;
+
 #ifndef OCMDefination_h
 #define OCMDefination_h
 
