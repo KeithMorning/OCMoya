@@ -15,8 +15,12 @@
 
 + (OCMEndpoint *)defaultEndpointMapping:(id<OCMTargetType>) target;
 
-+ (void)defaultRquestMapping:(OCMEndpoint *)endpoint closure:(RequestResultClosure)closure;
++ (void)defaultRequestMapping:(OCMEndpoint *)endpoint closure:(RequestResultClosure)closure;
 
 + (OCMHTTPSessionManager *)defaultHTTPManager;
+
+@property (class,nonatomic,copy,readonly) EndpointClosure defaultEndpointMappingClosure;
+
+@property (class,nonatomic,copy,readonly) RequestClosure defaultRequestMappingClosure;
 
 @end

@@ -13,18 +13,22 @@
 #import "OCMPlugin.h"
 #import "OCMDefination.h"
 #import "OCMHTTPSessionManager.h"
+#import "OCMCancellable.h"
+#import "OCMResponse.h"
 
 //the Target covert into a Endpoint block
 typedef OCMEndpoint *(^EndpointClosure)(id<OCMTargetType>);
 
-//custom your request here
+//custom yourself request here
 typedef  OCMResult<NSURLRequest *,OCMoyaError *> *(^RequestResultClosure)(OCMResult<NSURLRequest *,OCMoyaError *> *result);
 
 //Closure that resolves an `Endpoint` into `RequestResult`
-typedef id(^RequestClosure)(OCMEndpoint *endpoint, RequestResultClosure);
+typedef void(^RequestClosure)(OCMEndpoint *endpoint, RequestResultClosure);
 
 //Closure that decides if/how a request should be stubbed
 typedef OCMStubBehavor(^StubClosure)(id<OCMTargetType>);
+
+typedef void(^Completion)(OCMResult<OCMResponse *,OCMoyaError *> *result);
 
 @interface OCMProvider : NSObject
 
@@ -43,5 +47,12 @@ typedef OCMStubBehavor(^StubClosure)(id<OCMTargetType>);
                             stubClosure:(StubClosure)stubClosure
                                 manager:(OCMHTTPSessionManager *)manager
                                 plugins:(NSArray<id<OCMPlugin>> *)plugins;
+
+
+
+
+- (OCMEndpoint *)endpoint:(id<OCMTargetType>)target;
+
+- (id<OCMCancellable>)request:(id<OCMTargetType>)target completion:(Completion)completion;
 
 @end

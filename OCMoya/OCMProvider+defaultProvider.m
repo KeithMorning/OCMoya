@@ -8,6 +8,7 @@
 
 #import "OCMProvider+defaultProvider.h"
 #import "OCMoyaError.h"
+#import "OCMEndpoint.h"
 
 @implementation OCMProvider (defaultProvider)
 
@@ -26,7 +27,7 @@
 }
 
 
-+ (void)defaultRquestMapping:(OCMEndpoint *)endpoint closure:(RequestResultClosure)closure{
++ (void)defaultRequestMapping:(OCMEndpoint *)endpoint closure:(RequestResultClosure)closure{
     
     NSURLRequest *request = endpoint.urlRequest;
     if (request) {
@@ -53,6 +54,24 @@
     OCMHTTPSessionManager *manager = [[OCMHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
     return manager;
 
+}
+
++ (EndpointClosure)defaultEndpointMappingClosure{
+    
+    EndpointClosure closure = ^OCMEndpoint*(id<OCMTargetType> target){
+       return [OCMProvider defaultEndpointMapping:target];
+    };
+    
+    return closure;
+}
+
++ (RequestClosure)defaultRequestMappingClosure{
+    
+    RequestClosure closure = ^void(OCMEndpoint *endpoint, RequestResultClosure requestResultClosure){
+        [OCMProvider defaultRequestMapping:endpoint closure:requestResultClosure];
+    };
+    
+    return closure;
 }
 
 

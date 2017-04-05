@@ -72,11 +72,18 @@ typedef NS_ENUM(NSUInteger, OCMTaskType) {
     OCMTaskTypeDownload,
 };
 
-typedef NS_ENUM(NSUInteger,OCMStubBehavor){
-    OCMStubBehavorNever,
-    OCMStubBehavorImmediate,
-    OCMStubBehavorDelayed,
+typedef NS_ENUM(NSUInteger,OCMStubBehavorType){
+    OCMStubBehavorTypeNever,
+    OCMStubBehavorTypeImmediate,
+    OCMStubBehavorTypeDelayed,
 };
+
+struct OCMStubBehavor {
+    OCMStubBehavorType behavor;
+    NSTimeInterval delay;
+};
+
+typedef struct OCMStubBehavor OCMStubBehavor;
 
 @protocol OCMURLRquestConverible <NSObject>
 
