@@ -51,12 +51,25 @@ NSString *const OCMoyaErrorDomain = @"com.moya.netService";
     }
 }
 
+
++ (OCMoyaError *)requestMappingError{
+
+    return [[OCMoyaError alloc] initWithError:nil errorType:OCMoyaErrorTypeRequestMapping response:nil];
+}
+
++ (OCMoyaError *)underlyingError{
+    return [[OCMoyaError alloc] initWithError:nil errorType:OCMoyaErrorTypeUnderlying response:nil];
+}
+
 @end
 
 
 @implementation NSError (OCMoyaError)
 
 + (instancetype)errorWithCode:(NSInteger)code errorlocalizetion:(NSString *)message{
+    if (!message) {
+        message = @"";
+    }
     NSError *error = [NSError errorWithDomain:OCMoyaErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey:message}];
     return error;
 }

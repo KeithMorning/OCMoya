@@ -31,6 +31,9 @@ typedef NS_ENUM(NSUInteger, OCMoyaErrorType) {
 
 @property (nonatomic,copy,readonly) NSString *errorDescription;
 
+@property (class,readonly) OCMoyaError *requestMappingError;
+@property (class,readonly) OCMoyaError *underlyingError;
+
 @end
 
 @interface NSError (OCMoyaError)

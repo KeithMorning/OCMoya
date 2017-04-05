@@ -12,11 +12,13 @@
 
 @interface OCMEndpointSampleResponse : NSObject
 
-@property (nonatomic,strong) NSHTTPURLResponse *response;
+@property (nonatomic,assign) NSInteger statusCode;
 
 @property (nonatomic,strong) NSData *data;
 
 @property (nonatomic,strong) NSError *error;
+
+- (instancetype)initWithStatusCode:(NSInteger)statusCode data:(NSData *)data error:(NSError *)error;
 
 @end
 

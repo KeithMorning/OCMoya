@@ -12,6 +12,20 @@
 #import "OCMDefination.h"
 
 @implementation OCMEndpointSampleResponse
+
+
+- (instancetype)initWithStatusCode:(NSInteger)statusCode data:(NSData *)data error:(NSError *)error{
+    
+    if (self = [super init]) {
+        _statusCode = statusCode;
+        _data = data;
+        _error = error;
+    }
+    
+    return self;
+
+}
+
 @end
 
 

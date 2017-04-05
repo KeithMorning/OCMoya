@@ -25,16 +25,26 @@ typedef OCMImageType OCMImage;
 
 #define OCMURLRequestSerialization AFURLRequestSerialization
 #define OCMMultipartFormData AFMultipartFormData
+#define OCMURLResponseSerialization AFURLResponseSerialization
+
+typedef AFURLSessionManager OCMURLSessionManager;
 
 typedef AFHTTPRequestSerializer OCMHTTPRequestSerializer;
-
-typedef AFHTTPSessionManager OCMSessionManager;
 
 typedef AFJSONRequestSerializer OCMJSONRequestSerializer;
 
 typedef AFPropertyListRequestSerializer OCMPropertyListRequestSerializer;
 
 typedef AFXMLParserResponseSerializer OCMXMLParserResponseSerializer;
+
+typedef AFHTTPResponseSerializer OCMHTTPResponseSerializer;
+
+typedef AFJSONResponseSerializer OCMJSONResponseSerializer;
+
+typedef AFImageResponseSerializer OCMImageResponseSerializer;
+
+typedef AFPropertyListResponseSerializer  OCMPropertyListResponseSerializer;
+
 
 #ifndef OCMDefination_h
 #define OCMDefination_h
@@ -62,6 +72,11 @@ typedef NS_ENUM(NSUInteger, OCMTaskType) {
     OCMTaskTypeDownload,
 };
 
+typedef NS_ENUM(NSUInteger,OCMStubBehavor){
+    OCMStubBehavorNever,
+    OCMStubBehavorImmediate,
+    OCMStubBehavorDelayed,
+};
 
 @protocol OCMURLRquestConverible <NSObject>
 
