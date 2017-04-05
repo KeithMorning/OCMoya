@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5343C9381E8F4B9400E082F4 /* OCMPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C9371E8F4B9400E082F4 /* OCMPlugin.h */; };
 		53CFE4DF1E8618A40051EE07 /* OCMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4DD1E8618A40051EE07 /* OCMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		53CFE4EB1E8618D00051EE07 /* OCMDefination.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E51E8618D00051EE07 /* OCMDefination.h */; };
 		53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */; };
 		53CFE4ED1E8618D00051EE07 /* OCMEndpoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */; };
-		53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */; };
-		53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */; };
 		53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */ = {isa = PBXBuildFile; fileRef = 53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */; };
 		53D177F61E88A40A0086F951 /* OCMCancellable.h in Headers */ = {isa = PBXBuildFile; fileRef = 53D177F41E88A40A0086F951 /* OCMCancellable.h */; };
 		53D177F71E88A40A0086F951 /* OCMCancellable.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D177F51E88A40A0086F951 /* OCMCancellable.m */; };
@@ -32,14 +31,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5343C9371E8F4B9400E082F4 /* OCMPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMPlugin.h; sourceTree = "<group>"; };
 		53CFE4DA1E8618A40051EE07 /* OCMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CFE4DD1E8618A40051EE07 /* OCMoya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCMoya.h; sourceTree = "<group>"; };
 		53CFE4DE1E8618A40051EE07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53CFE4E51E8618D00051EE07 /* OCMDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMDefination.h; sourceTree = "<group>"; };
 		53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMEndpoint.h; sourceTree = "<group>"; };
 		53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMEndpoint.m; sourceTree = "<group>"; };
-		53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMoya+AFNetworing.h"; sourceTree = "<group>"; };
-		53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMoya+AFNetworing.m"; sourceTree = "<group>"; };
 		53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMTargetType.h; sourceTree = "<group>"; };
 		53D177F41E88A40A0086F951 /* OCMCancellable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMCancellable.h; sourceTree = "<group>"; };
 		53D177F51E88A40A0086F951 /* OCMCancellable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMCancellable.m; sourceTree = "<group>"; };
@@ -126,8 +124,6 @@
 				53DDA7C91E87679300490C16 /* OCMoyaConfig.m */,
 				53CFE4E61E8618D00051EE07 /* OCMEndpoint.h */,
 				53CFE4E71E8618D00051EE07 /* OCMEndpoint.m */,
-				53CFE4E81E8618D00051EE07 /* OCMoya+AFNetworing.h */,
-				53CFE4E91E8618D00051EE07 /* OCMoya+AFNetworing.m */,
 				53CFE4EA1E8618D00051EE07 /* OCMTargetType.h */,
 				53CFE4DD1E8618A40051EE07 /* OCMoya.h */,
 				53D177F41E88A40A0086F951 /* OCMCancellable.h */,
@@ -136,6 +132,7 @@
 				53D177FD1E88ABA70086F951 /* OCMoyaError.m */,
 				53D178001E88ABF60086F951 /* OCMResponse.h */,
 				53D178011E88ABF60086F951 /* OCMResponse.m */,
+				5343C9371E8F4B9400E082F4 /* OCMPlugin.h */,
 			);
 			path = OCMoya;
 			sourceTree = "<group>";
@@ -179,10 +176,10 @@
 				53DDA7D21E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.h in Headers */,
 				53CFE4DF1E8618A40051EE07 /* OCMoya.h in Headers */,
 				53D178021E88ABF60086F951 /* OCMResponse.h in Headers */,
-				53CFE4EE1E8618D00051EE07 /* OCMoya+AFNetworing.h in Headers */,
 				53CFE4F01E8618D00051EE07 /* OCMTargetType.h in Headers */,
 				53DDA7D81E87C44700490C16 /* OCMoyaTask.h in Headers */,
 				53DDA7DD1E87C7F000490C16 /* OCMUploadTask.h in Headers */,
+				5343C9381E8F4B9400E082F4 /* OCMPlugin.h in Headers */,
 				53D177FE1E88ABA70086F951 /* OCMoyaError.h in Headers */,
 				53D177F61E88A40A0086F951 /* OCMCancellable.h in Headers */,
 				53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */,
@@ -295,11 +292,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				53DDA7D31E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m in Sources */,
-				53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */,
 				53DDA7CB1E87679300490C16 /* OCMoyaConfig.m in Sources */,
 				53DDA7DE1E87C7F000490C16 /* OCMUploadTask.m in Sources */,
 				53D178031E88ABF60086F951 /* OCMResponse.m in Sources */,
-				53CFE4EF1E8618D00051EE07 /* OCMoya+AFNetworing.m in Sources */,
 				53D177F71E88A40A0086F951 /* OCMCancellable.m in Sources */,
 				53D177FF1E88ABA70086F951 /* OCMoyaError.m in Sources */,
 				53CFE4ED1E8618D00051EE07 /* OCMEndpoint.m in Sources */,

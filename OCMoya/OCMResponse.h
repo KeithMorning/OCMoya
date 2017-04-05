@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
-#import "OCMoyaError.m"
+#import "OCMoyaError.h"
 
 @interface OCMResponse : NSObject
 

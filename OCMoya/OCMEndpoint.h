@@ -43,7 +43,7 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 - (instancetype)initWithURL:(nonnull NSString *)url
       sampleResponseClosure:(nullable OCMEndpointSampleResponseClosure)closure
                      method:(OCMMethod)method
-                 parameters:(nullable NSDictionary<NSString *,NSString *> *)parameters
+                 parameters:(nullable NSDictionary<NSString *,id> *)parameters
           parameterEncoding:(OCMParameterEncoding)encoding
            httpHeaderFields:(nullable NSDictionary<NSString *,NSString *> *)httpHeaderFields;
 

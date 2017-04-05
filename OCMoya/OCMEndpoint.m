@@ -40,7 +40,7 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 - (instancetype)initWithURL:(NSString *)url
       sampleResponseClosure:(OCMEndpointSampleResponseClosure)closure
                      method:(OCMMethod)method
-                 parameters:(NSDictionary<NSString *,NSString *> *)parameters
+                 parameters:(NSDictionary<NSString *,id> *)parameters
           parameterEncoding:(OCMParameterEncoding)encoding
            httpHeaderFields:(NSDictionary<NSString *,NSString *> *)httpHeaderFields{
     
