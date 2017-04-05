@@ -56,9 +56,12 @@
 }
 
 - (id<OCMCancellable>)request:(id<OCMTargetType>)target completion:(Completion)completion{
-    return nil;
+    return [self request:target queue:nil progress:nil completion:completion];
 }
 
+- (id<OCMCancellable>)request:(id<OCMTargetType>)target queue:(dispatch_queue_t) queue progress:(progressBlock)progress completion:(Completion)completon{
+    return @"";
+}
 
 
 @end

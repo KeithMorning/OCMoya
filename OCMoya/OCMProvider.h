@@ -15,6 +15,7 @@
 #import "OCMHTTPSessionManager.h"
 #import "OCMCancellable.h"
 #import "OCMResponse.h"
+#import "OCMProgressReponse.h"
 
 //the Target covert into a Endpoint block
 typedef OCMEndpoint *(^EndpointClosure)(id<OCMTargetType>);
@@ -29,6 +30,8 @@ typedef void(^RequestClosure)(OCMEndpoint *endpoint, RequestResultClosure);
 typedef OCMStubBehavor(^StubClosure)(id<OCMTargetType>);
 
 typedef void(^Completion)(OCMResult<OCMResponse *,OCMoyaError *> *result);
+
+typedef void(^progressBlock)(OCMProgressReponse *progress);
 
 @interface OCMProvider : NSObject
 

@@ -33,4 +33,6 @@
                                       success:(void (^)(NSURLSessionDataTask *, id))success
                                       failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 
+- (void)stop;
+
 @end
