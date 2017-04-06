@@ -10,6 +10,33 @@
 #import "OCMDefination.h"
 #import "OCMoyaError.h"
 
+@class OCMRequestTask;
+
+typedef void(^requestRetryCompletion)(BOOL shouldRetry, NSTimeInterval timeDelay);
+
+@protocol OCMRequestAdapter <NSObject>
+
+- (NSURLRequest *)adapt:(NSURLRequest *)request;
+
+@end
+
+//Give user a chance to know if need to make a retry
+@protocol OCMRequestRetrier <NSObject>
+
+- (BOOL)shouldretryRequest:(OCMRequestTask *)task
+                   manager:(OCMURLSessionManager *)sessionManager
+                     error:(OCMoyaError *)error
+                completion:(requestRetryCompletion)completion;
+
+@end
+
+@protocol OCMTaskConvertible <NSObject>
+
+- (NSURLSessionTask *)taskWithAdapter:(id<OCMRequestAdapter>)adapter queue:(dispatch_queue_t)queue;
+
+
+@end
+
 @interface OCMRequestTask : NSObject
 
 @property (nonatomic, strong,readonly) NSURLSessionTask *task;
@@ -28,6 +55,13 @@
 
 
 
+/**
+Make a task
+
+ @param session the NSURLSession we use to make request
+ @param task the request task when session return a datatask or downloadtask or uploadtask
+ @return the instance of a request
+ */
 - (instancetype)initWithSession:(NSURLSession *)session
                     requestTask:(NSURLSessionTask *)task;
 

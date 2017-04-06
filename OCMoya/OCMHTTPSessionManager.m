@@ -16,11 +16,6 @@
 @implementation OCMHTTPSessionManager
 @dynamic responseSerializer;
 
-- (void)setRequestSerializer:(OCMHTTPRequestSerializer <OCMURLRequestSerialization> *)requestSerializer {
-    NSParameterAssert(requestSerializer);
-    
-    _requestSerializer = requestSerializer;
-}
 
 - (void)setResponseSerializer:(OCMHTTPResponseSerializer <OCMURLResponseSerialization> *)responseSerializer {
     NSParameterAssert(responseSerializer);
@@ -29,7 +24,7 @@
 }
 
 
-- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request
+- (OCMDataRequestTask *)dataTaskWithRequest:(NSURLRequest *)request
                                   uploadProgress:(nullable void (^)(NSProgress *uploadProgress)) uploadProgress
                                 downloadProgress:(nullable void (^)(NSProgress *downloadProgress)) downloadProgress
                                          success:(void (^)(NSURLSessionDataTask *, id))success
@@ -52,7 +47,9 @@
                            }
                        }];
     
-    return dataTask;
+    OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:dataTask];
+    
+    return task;
 }
 
 #pragma mark - NSSecureCoding
@@ -80,7 +77,6 @@
         return nil;
     }
     
-    self.requestSerializer = [decoder decodeObjectOfClass:[AFHTTPRequestSerializer class] forKey:NSStringFromSelector(@selector(requestSerializer))];
     self.responseSerializer = [decoder decodeObjectOfClass:[AFHTTPResponseSerializer class] forKey:NSStringFromSelector(@selector(responseSerializer))];
     AFSecurityPolicy *decodedPolicy = [decoder decodeObjectOfClass:[AFSecurityPolicy class] forKey:NSStringFromSelector(@selector(securityPolicy))];
     if (decodedPolicy) {
@@ -98,7 +94,6 @@
     } else {
         [coder encodeObject:self.session.configuration.identifier forKey:@"identifier"];
     }
-    [coder encodeObject:self.requestSerializer forKey:NSStringFromSelector(@selector(requestSerializer))];
     [coder encodeObject:self.responseSerializer forKey:NSStringFromSelector(@selector(responseSerializer))];
     [coder encodeObject:self.securityPolicy forKey:NSStringFromSelector(@selector(securityPolicy))];
 }
@@ -108,7 +103,6 @@
 - (instancetype)copyWithZone:(NSZone *)zone {
     OCMHTTPSessionManager *HTTPClient = [[[self class] allocWithZone:zone] initWithSessionConfiguration:self.session.configuration];
     
-    HTTPClient.requestSerializer = [self.requestSerializer copyWithZone:zone];
     HTTPClient.responseSerializer = [self.responseSerializer copyWithZone:zone];
     HTTPClient.securityPolicy = [self.securityPolicy copyWithZone:zone];
     return HTTPClient;

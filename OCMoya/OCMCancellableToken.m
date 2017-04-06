@@ -8,46 +8,48 @@
 
 #import "OCMCancellableToken.h"
 
+@interface OCMCancellableToken ()
+
+@property (nonatomic,strong) dispatch_semaphore_t semaphore;
+
+@property (nonatomic,strong) OCMRequestTask *requestTask;
+
+@end
+
 
 @implementation OCMCancellableToken
 
+- (instancetype)init{
+    if (self = [super init]) {
+        _semaphore =  dispatch_semaphore_create(1);
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithRequestTask:(OCMRequestTask *)requestTask{
+    if (self = [self init]) {
+        _requestTask = requestTask;
+    }
+    
+    return self;
+}
+
 
 - (void)cancel{
-    [self.requestTask cancel];
-    if (self.cancelAction) {
-        self.cancelAction();
+    
+
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    
+    if (self.isCancelled) {
+        return;
     }
+    
+    [self.requestTask cancel];
+    self.isCancelled = YES;
+    dispatch_semaphore_signal(self.semaphore);
 }
 
-- (void)retryIfneedWithError:(OCMoyaError *)error{
-    
-    if (self.requestTask.task.state != NSURLSessionTaskStateCanceling
-       || self.requestTask.task.state != NSURLSessionTaskStateCompleted) {
-        return;
-    }
-    
-    if (!self.retrier) {
-        return;
-    }
-    
-    if (![self.retrier respondsToSelector:@selector(shouldretryRequest:error:)]) {
-        return;
-    }
-    
-    BOOL needRetry = [self.retrier shouldretryRequest:self.target error:error];
-    
-    if (!needRetry) {
-        return;
-    }
-    
-    if ([self.adapter respondsToSelector:@selector(adapt:)]) {
-       NSURLRequest *request = [self.adapter adapt:self.requestTask.request];
-        
-    }
-    
-    
-    
-    
-}
+
 
 @end
