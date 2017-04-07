@@ -11,14 +11,12 @@
 
 @interface OCMProgressReponse : NSObject
 
-@property (nonatomic,strong,readonly) OCMResponse *response;
-
 @property (nonatomic,strong,readonly) NSProgress *progressObject;
 
 @property (nonatomic,assign,readonly) double progress;
 
 @property (nonatomic,assign,readonly) BOOL completed;
 
-- (instancetype)initWith:(NSProgress *)progress response:(OCMResponse *)response;
+- (instancetype)initWith:(NSProgress *)progress;
 
 @end

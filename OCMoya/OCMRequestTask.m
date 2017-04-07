@@ -24,8 +24,6 @@
 
 @property (nonatomic,assign) CFAbsoluteTime startTime;
 
-@property (nonatomic,assign) CFAbsoluteTime endTime;
-
 @property (nonatomic,strong) NSRecursiveLock *lock;
 
 @end
@@ -86,6 +84,8 @@
 - (void)updateTask:(NSURLSessionTask *)task{
     [self.lock lock];
     self.task = task;
+    self.startTime = -1;
+    self.endTime = -1;
     [self.lock unlock];
 }
 

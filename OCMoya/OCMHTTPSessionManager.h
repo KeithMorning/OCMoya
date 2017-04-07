@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
 #import "OCMDataRequestTask.h"
+#import "OCMProgressReponse.h"
+#import "OCMResponse.h"
+#import "OCMoyaError.h"
+
+typedef void(^completionClosure)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error);
+typedef void(^progressClosure)(OCMProgressReponse *_Nullable uploadProgress);
 
 @interface OCMHTTPSessionManager : OCMURLSessionManager
 
@@ -18,16 +24,28 @@
  
  @warning `responseSerializer` must not be `nil`.
  */
-@property (nonatomic, strong) OCMHTTPResponseSerializer <OCMURLResponseSerialization> * responseSerializer;
+@property (nonatomic, strong,nonnull) OCMHTTPResponseSerializer <OCMURLResponseSerialization> * responseSerializer;
+
+//if you
+@property (nonatomic,weak,nullable) id<OCMRequestRetrier> retrier;
+
+
+/**
+ whether to start requests immediately after being constructed, default is NO
+ */
+@property (nonatomic,assign) BOOL startRequestsImmediately;
 
 
 
-- (OCMDataRequestTask *)dataTaskWithRequest:(NSURLRequest *)request
-                               uploadProgress:(void (^)(NSProgress *uploadProgress)) uploadProgress
-                             downloadProgress:(void (^)(NSProgress *downloadProgress)) downloadProgress
-                                      success:(void (^)(NSURLSessionDataTask *, id))success
-                                      failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+- (nullable OCMDataRequestTask *)dataTaskWithRequest:(nonnull NSURLRequest *)request
+                             uploadProgress:(nullable void (^)(OCMProgressReponse * _Nullable uploadProgress)) uploadProgress
+                           downloadProgress:(nullable void (^)(OCMProgressReponse * _Nullable downloadProgress)) downloadProgress
+                                          completion:(nullable void(^)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error))completionClosure;
 
-- (void)retryWithTask:(OCMRequestTask *)task error:(OCMoyaError *)error;
+- (void)retryWithTask:(nonnull OCMRequestTask *)task
+                error:(nullable OCMoyaError *)error
+       uploadProgress:(nullable progressClosure) uploadProgressClosure
+     downloadProgress:(nullable progressClosure) downloadProgressClosure
+           completion:(nullable completionClosure)completionClosure;
 
 @end

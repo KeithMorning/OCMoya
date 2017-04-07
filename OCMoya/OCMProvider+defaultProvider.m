@@ -9,6 +9,7 @@
 #import "OCMProvider+defaultProvider.h"
 #import "OCMoyaError.h"
 #import "OCMEndpoint.h"
+#import "OCMCommonURLResponseSerialization.h"
 
 @implementation OCMProvider (defaultProvider)
 
@@ -52,6 +53,7 @@
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     OCMHTTPSessionManager *manager = [[OCMHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+    manager.responseSerializer = [OCMCommonURLResponseSerialization serializer];
     return manager;
 
 }

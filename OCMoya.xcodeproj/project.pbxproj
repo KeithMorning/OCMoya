@@ -45,6 +45,8 @@
 		53DDA7D91E87C44700490C16 /* OCMoyaTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7D71E87C44700490C16 /* OCMoyaTask.m */; };
 		53DDA7DD1E87C7F000490C16 /* OCMUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 53DDA7DB1E87C7F000490C16 /* OCMUploadTask.h */; };
 		53DDA7DE1E87C7F000490C16 /* OCMUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDA7DC1E87C7F000490C16 /* OCMUploadTask.m */; };
+		53FED1E51E971F57009E97D0 /* OCMCommonURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 53FED1E31E971F57009E97D0 /* OCMCommonURLResponseSerialization.h */; };
+		53FED1E61E971F57009E97D0 /* OCMCommonURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FED1E41E971F57009E97D0 /* OCMCommonURLResponseSerialization.m */; };
 		B692D0C88D294F23074E8B85 /* libPods-OCMoya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF369246F8A387F79980D11E /* libPods-OCMoya.a */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,8 @@
 		53DDA7D71E87C44700490C16 /* OCMoyaTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMoyaTask.m; sourceTree = "<group>"; };
 		53DDA7DB1E87C7F000490C16 /* OCMUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMUploadTask.h; sourceTree = "<group>"; };
 		53DDA7DC1E87C7F000490C16 /* OCMUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMUploadTask.m; sourceTree = "<group>"; };
+		53FED1E31E971F57009E97D0 /* OCMCommonURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMCommonURLResponseSerialization.h; sourceTree = "<group>"; };
+		53FED1E41E971F57009E97D0 /* OCMCommonURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMCommonURLResponseSerialization.m; sourceTree = "<group>"; };
 		884539E1C8E251A3AD162F76 /* Pods-OCMoya.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.debug.xcconfig"; sourceTree = "<group>"; };
 		BF369246F8A387F79980D11E /* libPods-OCMoya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCMoya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F726CCD57226CBF616EB6100 /* Pods-OCMoya.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCMoya.release.xcconfig"; path = "Pods/Target Support Files/Pods-OCMoya/Pods-OCMoya.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 				5343C9561E94E0B100E082F4 /* OCMRequestTask.m */,
 				5343C9591E96351200E082F4 /* OCMDataRequestTask.h */,
 				5343C95A1E96351200E082F4 /* OCMDataRequestTask.m */,
+				53FED1E31E971F57009E97D0 /* OCMCommonURLResponseSerialization.h */,
+				53FED1E41E971F57009E97D0 /* OCMCommonURLResponseSerialization.m */,
 			);
 			path = OCMoya;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 				5343C93B1E947FC000E082F4 /* OCMProvider.h in Headers */,
 				5343C94B1E94CBE800E082F4 /* OCMProvider+stub.h in Headers */,
 				5343C95B1E96351200E082F4 /* OCMDataRequestTask.h in Headers */,
+				53FED1E51E971F57009E97D0 /* OCMCommonURLResponseSerialization.h in Headers */,
 				53D177FE1E88ABA70086F951 /* OCMoyaError.h in Headers */,
 				5343C94F1E94D42A00E082F4 /* OCMProgressReponse.h in Headers */,
 				5343C9531E94DBB000E082F4 /* OCMCancellableToken.h in Headers */,
@@ -354,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53FED1E61E971F57009E97D0 /* OCMCommonURLResponseSerialization.m in Sources */,
 				53DDA7D31E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m in Sources */,
 				5343C9501E94D42A00E082F4 /* OCMProgressReponse.m in Sources */,
 				5343C9441E9493B600E082F4 /* OCMProvider+defaultProvider.m in Sources */,

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
 #import "OCMoyaError.h"
+#import "OCMPlugin.h"
 
 @class OCMRequestTask;
 
@@ -23,7 +24,7 @@ typedef void(^requestRetryCompletion)(BOOL shouldRetry, NSTimeInterval timeDelay
 //Give user a chance to know if need to make a retry
 @protocol OCMRequestRetrier <NSObject>
 
-- (BOOL)shouldretryRequest:(OCMRequestTask *)task
+- (void)shouldretryRequest:(OCMRequestTask *)task
                    manager:(OCMURLSessionManager *)sessionManager
                      error:(OCMoyaError *)error
                 completion:(requestRetryCompletion)completion;
@@ -37,11 +38,13 @@ typedef void(^requestRetryCompletion)(BOOL shouldRetry, NSTimeInterval timeDelay
 
 @end
 
-@interface OCMRequestTask : NSObject
+@interface OCMRequestTask : NSObject<OCMRequestType>
 
 @property (nonatomic, strong,readonly) NSURLSessionTask *task;
 
 @property (nonatomic, strong,readonly) NSURLRequest *request;
+
+@property (nonatomic, strong) id<OCMRequestAdapter> requestAdapter;
 
 @property (nonatomic, strong,readonly) NSURLResponse *response;
 
@@ -51,7 +54,7 @@ typedef void(^requestRetryCompletion)(BOOL shouldRetry, NSTimeInterval timeDelay
 
 @property (nonatomic,assign,readonly) CFAbsoluteTime startTime;
 
-@property (nonatomic,assign,readonly) CFAbsoluteTime endTime;
+@property (nonatomic,assign) CFAbsoluteTime endTime;
 
 
 
@@ -60,7 +63,7 @@ Make a task
 
  @param session the NSURLSession we use to make request
  @param task the request task when session return a datatask or downloadtask or uploadtask
- @return the instance of a request
+ @return the instance of a requestTask
  */
 - (instancetype)initWithSession:(NSURLSession *)session
                     requestTask:(NSURLSessionTask *)task;

@@ -58,4 +58,6 @@ typedef void(^progressBlock)(OCMProgressReponse *progress);
 
 - (id<OCMCancellable>)request:(id<OCMTargetType>)target completion:(Completion)completion;
 
+- (void)cancelCompletion:(id<OCMTargetType>)target completion:(Completion)completion;
+
 @end

@@ -16,11 +16,12 @@
 
 @property (nonatomic,strong,readonly) NSURLRequest *request;
 
-- (instancetype) authenticateWithUserName:(NSString *)user
+@optional
+- (id<OCMRequestType>) authenticateWithUserName:(NSString *)user
                                  password:(NSString *)password
                               persistence:(NSURLCredentialPersistence) persistence;
 
-- (instancetype) authenticateWithCredential:(NSURLCredential *)credential;
+- (id<OCMRequestType>) authenticateWithCredential:(NSURLCredential *)credential;
 
 
 @end

@@ -14,9 +14,9 @@
 typedef ObjectType resultType;
 typedef ErrorType resultErrorType;
 
-@property (nonatomic,strong) ObjectType success;
+@property (nonatomic,strong,readonly) ObjectType success;
 
-@property (nonatomic,strong) ErrorType error;
+@property (nonatomic,strong,readonly) ErrorType error;
 
 - (instancetype)initWithSuccess:(ObjectType)success;
 - (instancetype)initWithFailure:(ErrorType)error;

@@ -8,6 +8,7 @@
 
 #import "OCMProvider.h"
 #import "OCMDefination.h"
+#import "OCMCancellableToken.h"
 
 
 @interface OCMProvider (stub)
@@ -17,5 +18,10 @@
 + (StubClosure)immediatelyStub;
 
 + (StubClosure)delayedStub:(NSTimeInterval)time;
+
+- (OCMCancellableToken *)stubRequest:(id<OCMTargetType>)target
+                             request:(NSURLRequest *)request
+                            endpoint:(OCMEndpoint *)endpoint
+                        stubBehavior:(OCMStubBehavor)stubBehavor;
 
 @end

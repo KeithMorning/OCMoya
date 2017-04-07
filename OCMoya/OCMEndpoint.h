@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "OCMTargetType.h"
 #import "OCMoyaTask.h"
+#import "OCMRequestTask.h"
 
 @interface OCMEndpointSampleResponse : NSObject
 
 @property (nonatomic,assign) NSInteger statusCode;
+
+@property (nonatomic,strong) NSHTTPURLResponse *response;
 
 @property (nonatomic,strong) NSData *data;
 
@@ -26,7 +29,7 @@ typedef OCMEndpointSampleResponse*(^OCMEndpointSampleResponseClosure)(void);
 typedef NSDictionary<NSString *,id> parameterType;
 typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
-@interface OCMEndpoint : NSObject
+@interface OCMEndpoint : NSObject<OCMRequestAdapter>
 
 @property (nonatomic,copy,readonly) NSString *url;
 
@@ -56,6 +59,8 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 - (nonnull OCMEndpoint *)addingParameters:(nullable parameterType *)parameters
                          httpHeaderFields:(nullable httpHeaderType *)httpHeaders
                         parameterEncoding:(OCMParameterEncoding)encoding;
+
+- (nullable NSURLRequest *)adapt:(nonnull NSURLRequest *)request;
 
 
 @end

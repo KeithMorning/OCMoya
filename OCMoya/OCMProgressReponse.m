@@ -10,10 +10,9 @@
 
 @implementation OCMProgressReponse
 
-- (instancetype)initWith:(NSProgress *)progress response:(OCMResponse *)response{
+- (instancetype)initWith:(NSProgress *)progress{
     if (self = [super init]) {
         _progressObject = progress;
-        _response = response;
     }
     
     return self;
@@ -24,7 +23,7 @@
 }
 
 - (BOOL)completed{
-    return self.progress == 1.0 && self.response != nil;
+    return self.progress == 1.0;
 }
 
 @end

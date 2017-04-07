@@ -60,9 +60,20 @@
 }
 
 - (id<OCMCancellable>)request:(id<OCMTargetType>)target queue:(dispatch_queue_t) queue progress:(progressBlock)progress completion:(Completion)completon{
+    
+    OCMEndpoint *endpoint = [self endpoint:target];
     return @"";
 }
 
+- (void)cancelCompletion:(id<OCMTargetType>)target completion:(Completion)completion{
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
+    OCMoyaError *moyaError = [OCMoyaError underlyingError:error];
+    [self.plugins enumerateObjectsUsingBlock:^(id<OCMPlugin>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj didRecevice:nil error:moyaError targetType:target];
+    }];
+    OCMResult<OCMResponse *,OCMoyaError *> *result = [[OCMResult alloc] initWithFailure:moyaError];
+    completion(result);
+}
 
 @end
 

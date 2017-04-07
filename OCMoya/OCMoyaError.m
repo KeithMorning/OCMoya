@@ -57,8 +57,8 @@ NSString *const OCMoyaErrorDomain = @"com.moya.netService";
     return [[OCMoyaError alloc] initWithError:nil errorType:OCMoyaErrorTypeRequestMapping response:nil];
 }
 
-+ (OCMoyaError *)underlyingError{
-    return [[OCMoyaError alloc] initWithError:nil errorType:OCMoyaErrorTypeUnderlying response:nil];
++ (OCMoyaError *)underlyingError:(NSError *)error{
+    return [[OCMoyaError alloc] initWithError:error errorType:OCMoyaErrorTypeUnderlying response:nil];
 }
 
 @end
