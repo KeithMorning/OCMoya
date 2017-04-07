@@ -10,6 +10,7 @@
 #import "OCMTargetType.h"
 #import "OCMResponse.h"
 #import "OCMoyaError.h"
+#import "OCMResult.h"
 
 
 @protocol OCMRequestType <NSObject>
@@ -38,9 +39,9 @@
          targetType:(id<OCMTargetType>)target;
 
 //change the response before call complete
-- (void)process:(OCMResponse *)response
+- (OCMResult<OCMResponse *,OCMoyaError *> *)process:(OCMResponse *)response
           error:(OCMoyaError *)error
-     targetType:(id<OCMTargetType>)target convertResult:(void(^)(OCMResponse *response,OCMoyaError *error ))result;
+     targetType:(id<OCMTargetType>)target;
 
 
 

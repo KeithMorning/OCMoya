@@ -59,10 +59,78 @@
     return [self request:target queue:nil progress:nil completion:completion];
 }
 
-- (id<OCMCancellable>)request:(id<OCMTargetType>)target queue:(dispatch_queue_t) queue progress:(progressBlock)progress completion:(Completion)completon{
+- (id<OCMCancellable>)request:(id<OCMTargetType>)target queue:(dispatch_queue_t) queue progress:(progressBlock)progress completion:(Completion)completion{
     
     OCMEndpoint *endpoint = [self endpoint:target];
-    return @"";
+    OCMStubBehavor behavor = self.stubClosure(target);
+   __block OCMCancellableToken *cancelToken = nil;
+    
+    typedef OCMResult<OCMResponse *,OCMoyaError *> Result;
+    /**
+     Allow the plugins modify the response
+     */
+    Completion plusginsWithCompletion = ^(Result *result){
+        __block Result *tempresult = result;
+        [self.plugins enumerateObjectsUsingBlock:^(id<OCMPlugin>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            tempresult = [obj process:tempresult.success error:tempresult.error targetType:target];
+        }];
+        completion(tempresult);
+    };
+    
+    RequestResultClosure performNetworking = ^(OCMResult<NSURLRequest *,OCMoyaError *> * result){
+        if (cancelToken.isCancelled) {
+            //befor this request be constructed to a datatask,it may have be cancel
+            [self cancelCompletion:target completion:completion];
+            return;
+        }
+        
+        if (result.error) {
+            //can't create a vaild request
+            Result *newResult = [[Result alloc] initWithFailure:result.error];
+            completion(newResult);
+            return;
+        }
+        
+        //have a vaild request now, go next step
+        NSURLRequest *request = result.success;
+        __block NSURLRequest *prepareRequet= request;
+        [self.plugins enumerateObjectsUsingBlock:^(id<OCMPlugin>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            prepareRequet = [obj prepareRequest:request];
+            
+        }];
+        
+        switch (behavor.behavor) {
+            case OCMStubBehavorTypeNever:{
+                //TODO: Track request here in future
+                Completion netCompletion = ^(Result *result){
+                    plusginsWithCompletion(result);
+                };
+                
+                if ([target.taskType isKindOfClass:[OCMoyaTask class]]) {
+                    [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
+                }else{
+                    assert(@"NOT support for now");
+                }
+            }
+                break;
+                
+            default:
+                cancelToken = [self stubRequest:target request:prepareRequet endpoint:endpoint stubBehavior:behavor completion:^(OCMResult<OCMResponse *,OCMoyaError *> *result) {
+                    
+                    //this fucntion's completion will call in the plusginsWithCompletion
+                    plusginsWithCompletion(result);
+                }];
+                return;
+                break;
+        }
+        
+        
+    };
+    
+    self.requestClosure(endpoint, performNetworking);
+    
+    return cancelToken;
 }
 
 - (void)cancelCompletion:(id<OCMTargetType>)target completion:(Completion)completion{
@@ -73,6 +141,26 @@
     }];
     OCMResult<OCMResponse *,OCMoyaError *> *result = [[OCMResult alloc] initWithFailure:moyaError];
     completion(result);
+}
+
+- (OCMCancellableToken *)sendRequest:(id<OCMTargetType>)target
+                             request:(NSURLRequest *)request
+                               queue:(dispatch_queue_t)queue
+                            progress:(progressBlock)progressClosure
+                          completion:(Completion)completion{
+    
+   OCMRequestTask *task = [self.Manager dataTaskWithRequest:request
+                       uploadProgress:nil
+                     downloadProgress:nil
+                           completion:^(BOOL success, OCMResponse * _Nullable responseObject, OCMoyaError * _Nullable error) {
+                               if (success) {
+                                   completion([[OCMResult alloc] initWithSuccess:responseObject]);
+                               }else{
+                                   completion([[OCMResult alloc] initWithFailure:responseObject]);
+                               }
+    }];
+    
+   return [[OCMCancellableToken alloc] initWithRequestTask:task];
 }
 
 @end

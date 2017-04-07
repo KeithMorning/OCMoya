@@ -34,7 +34,8 @@
 - (OCMCancellableToken *)stubRequest:(id<OCMTargetType>)target
                              request:(NSURLRequest *)request
                             endpoint:(OCMEndpoint *)endpoint
-                        stubBehavior:(OCMStubBehavor)stubBehavor completion:(Completion)competion{
+                        stubBehavior:(OCMStubBehavor)stubBehavor
+                          completion:(Completion)competion{
     
     [self notifyPluginsOfImpendingStub:request target:target];
     OCMCancellableToken *cancelToken = [OCMCancellableToken new];

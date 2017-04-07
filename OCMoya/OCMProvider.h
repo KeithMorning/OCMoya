@@ -21,7 +21,7 @@
 typedef OCMEndpoint *(^EndpointClosure)(id<OCMTargetType>);
 
 //custom yourself request here
-typedef  OCMResult<NSURLRequest *,OCMoyaError *> *(^RequestResultClosure)(OCMResult<NSURLRequest *,OCMoyaError *> *result);
+typedef  void(^RequestResultClosure)(OCMResult *result);
 
 //Closure that resolves an `Endpoint` into `RequestResult`
 typedef void(^RequestClosure)(OCMEndpoint *endpoint, RequestResultClosure);

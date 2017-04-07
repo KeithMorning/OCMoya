@@ -22,6 +22,7 @@
 - (OCMCancellableToken *)stubRequest:(id<OCMTargetType>)target
                              request:(NSURLRequest *)request
                             endpoint:(OCMEndpoint *)endpoint
-                        stubBehavior:(OCMStubBehavor)stubBehavor;
+                        stubBehavior:(OCMStubBehavor)stubBehavor
+                          completion:(Completion)competion;
 
 @end
