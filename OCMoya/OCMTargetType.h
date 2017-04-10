@@ -17,19 +17,19 @@
 
 @property (nonatomic,copy,readonly) NSURL *baseURL;
 
-@property (nonatomic,copy,readonly) NSString *path;
+@property (nonatomic,copy) NSString *path;
 
-@property (nonatomic,assign,readonly) OCMMethod meathod;
+@property (nonatomic,assign) OCMMethod meathod;
 
-@property (nonatomic,copy,readonly) NSDictionary<NSString *,id> *parameters;
+@property (nonatomic,copy) NSDictionary<NSString *,id> *bodyParameters;
 
-@property (nonatomic,assign,readonly) OCMParameterEncoding parameterEncoding;
+@property (nonatomic,copy) NSDictionary<NSString *,id> *urlParameters;
 
-@property (nonatomic,copy,readonly) NSData *sampleData;
+@property (nonatomic,assign) OCMParameterEncoding parameterEncoding;
 
-@property (nonatomic,strong,readonly) OCMoyaTask *taskType;
+@property (nonatomic,copy) NSData *sampleData;
 
-@property (nonatomic,assign,readonly) BOOL validate;
+@property (nonatomic,strong) OCMoyaTask *taskType;
 
 @end
 

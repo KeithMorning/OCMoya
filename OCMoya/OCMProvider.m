@@ -38,9 +38,14 @@
         _stubClosure = [OCMProvider neverStub];
     }
     
+    if (!_Manager) {
+        _Manager = [OCMProvider defaultHTTPManager];
+    }
+    
     if (_plugins) {
         _plugins = @[];
     }
+
     
     
     
@@ -108,7 +113,7 @@
                 };
                 
                 if ([target.taskType isKindOfClass:[OCMoyaTask class]]) {
-                    [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
+                     cancelToken = [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
                 }else{
                     assert(@"NOT support for now");
                 }
@@ -153,11 +158,23 @@
                        uploadProgress:nil
                      downloadProgress:nil
                            completion:^(BOOL success, OCMResponse * _Nullable responseObject, OCMoyaError * _Nullable error) {
-                               if (success) {
-                                   completion([[OCMResult alloc] initWithSuccess:responseObject]);
+                               
+                               void(^excute)() = ^{
+                                   if (success) {
+                                       completion([[OCMResult alloc] initWithSuccess:responseObject]);
+                                   }else{
+                                       completion([[OCMResult alloc] initWithFailure:error]);
+                                   }
+                               };
+                               
+                               if (queue) {
+                                   dispatch_async(queue, ^{
+                                       excute();
+                                   });
                                }else{
-                                   completion([[OCMResult alloc] initWithFailure:responseObject]);
+                                   excute();
                                }
+                               
     }];
     
    return [[OCMCancellableToken alloc] initWithRequestTask:task];

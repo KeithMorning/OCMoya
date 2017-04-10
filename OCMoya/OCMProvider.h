@@ -16,6 +16,7 @@
 #import "OCMCancellable.h"
 #import "OCMResponse.h"
 #import "OCMProgressResponse.h"
+#import "OCMCancellableToken.h"
 
 //the Target covert into a Endpoint block
 typedef OCMEndpoint *(^EndpointClosure)(id<OCMTargetType>);
@@ -56,7 +57,9 @@ typedef void(^progressBlock)(OCMProgressResponse *progress);
 
 - (OCMEndpoint *)endpoint:(id<OCMTargetType>)target;
 
-- (id<OCMCancellable>)request:(id<OCMTargetType>)target completion:(Completion)completion;
+- (OCMCancellableToken *)request:(id<OCMTargetType>)target completion:(Completion)completion;
+
+- (OCMCancellableToken *)request:(id<OCMTargetType>)target queue:(dispatch_queue_t) queue progress:(progressBlock)progress completion:(Completion)completion;
 
 - (void)cancelCompletion:(id<OCMTargetType>)target completion:(Completion)completion;
 

@@ -8,7 +8,7 @@
 
 #import "OCMEndpoint.h"
 #import "OCMoyaConfig.h"
-#import "AFHTTPRequestSerializer+OCMSerializer.h"
+#import "OCMRequestSerializer.h"
 #import "OCMDefination.h"
 
 @implementation OCMEndpointSampleResponse
@@ -40,7 +40,9 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 
 @property (nonatomic,copy) OCMEndpointSampleResponseClosure sampleResponseClosure;
 
-@property (nonatomic,copy) parameterType *parameters;
+@property (nonatomic,copy) parameterType *urlParameters;
+
+@property (nonatomic,copy) parameterType *bodyParameters;
 
 @property (nonatomic,assign) OCMParameterEncoding parameterEncoding;
 
@@ -51,12 +53,13 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 @implementation OCMEndpoint
 
 
-- (instancetype)initWithURL:(NSString *)url
-      sampleResponseClosure:(OCMEndpointSampleResponseClosure)closure
+- (instancetype)initWithURL:(nonnull NSString *)url
+      sampleResponseClosure:(nullable OCMEndpointSampleResponseClosure)closure
                      method:(OCMMethod)method
-                 parameters:(NSDictionary<NSString *,id> *)parameters
+              urlParameters:(nullable NSDictionary<NSString *,id> *)urlParameters
+              bodyParameters:(nullable NSDictionary<NSString *,id> *)bodyParameters
           parameterEncoding:(OCMParameterEncoding)encoding
-           httpHeaderFields:(NSDictionary<NSString *,NSString *> *)httpHeaderFields{
+           httpHeaderFields:(nullable NSDictionary<NSString *,NSString *> *)httpHeaderFields{
     
     if (!url) {
         NSAssert(url != nil, @"input a invaild url");
@@ -66,7 +69,8 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     _url = url;
     _method = method;
     _sampleResponseClosure = closure;
-    _parameters = parameters;
+    _urlParameters = urlParameters;
+    _bodyParameters = bodyParameters;
     _parameterEncoding = encoding;
     _httpHeaderFields = httpHeaderFields;
     
@@ -75,55 +79,103 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 }
 
 
-- (OCMEndpoint *)addingParameter:(parameterType *)newparameter{
-    return [self addingParameters:newparameter
-                 httpHeaderFields:self.httpHeaderFields
-                parameterEncoding:self.parameterEncoding];
-
-}
 
 - (OCMEndpoint *)addingHttpHeaderFields:(httpHeaderType *)httpHeaderFields{
     
-    return [self addingParameters:self.parameters
+    return [self addingParameters:self.urlParameters
                  httpHeaderFields:httpHeaderFields
                 parameterEncoding:self.parameterEncoding];
 
 }
 
-- (OCMEndpoint *)addingParameters:(parameterType *)parameters httpHeaderFields:(httpHeaderType *)httpHeaders parameterEncoding:(OCMParameterEncoding)encoding{
+- (OCMEndpoint *)addingParameters:(parameterType *)parameters
+                 httpHeaderFields:(httpHeaderType *)httpHeaders
+                parameterEncoding:(OCMParameterEncoding)encoding{
     
-    parameterType *newParameters = [self addWithParameters:parameters];
+    parameterType *newParameters = [self addWithParameters:parameters parameterType:encoding];
     httpHeaderType *newHttpHeaderFields = [self addWithHttpHeaderFields:httpHeaders];
     
-    return [[OCMEndpoint alloc] initWithURL:self.url
-                      sampleResponseClosure:self.sampleResponseClosure
-                                     method:self.method
-                                 parameters:newParameters
-                          parameterEncoding:encoding
-                           httpHeaderFields:newHttpHeaderFields];
+    
+    switch (encoding) {
+        case OCMParameterEncodingURL:
+        {
+            return [[OCMEndpoint alloc] initWithURL:self.url
+                              sampleResponseClosure:self.sampleResponseClosure
+                                             method:self.method
+                                      urlParameters:newParameters
+                                      bodyParameters:self.bodyParameters
+                                  parameterEncoding:encoding
+                                   httpHeaderFields:newHttpHeaderFields];
+        }
+            break;
+            
+        default:
+            return [[OCMEndpoint alloc] initWithURL:self.url
+                              sampleResponseClosure:self.sampleResponseClosure
+                                             method:self.method
+                                      urlParameters:self.urlParameters
+                                      bodyParameters:newParameters
+                                  parameterEncoding:encoding
+                                   httpHeaderFields:newHttpHeaderFields];
+            break;
+    }
+    
+
 
 }
 
 
-- (parameterType *)addWithParameters:(parameterType *)parameters{
+- (parameterType *)addWithParameters:(parameterType *)parameters parameterType:(OCMParameterEncoding)encodingType{
     
-    if (self.parameters == parameters
-        || !parameters
-        || parameters.allKeys.count==0) {
-        return self.parameters;
+    switch (encodingType) {
+        case OCMParameterEncodingURL:
+        {
+            if (self.urlParameters == parameters
+                || !parameters
+                || parameters.allKeys.count==0) {
+                return self.urlParameters;
+            }
+            
+            if (!self.urlParameters) {
+                self.urlParameters = @{};
+            }
+            
+            __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:self.urlParameters];
+            
+            [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                [newParameters setObject:obj forKey:key];
+            }];
+            
+            return [newParameters copy];
+        }
+            break;
+            
+        default:
+        {
+            if (self.bodyParameters == parameters
+                || !parameters
+                || parameters.allKeys.count==0) {
+                return self.bodyParameters;
+            }
+            
+            if (!self.bodyParameters) {
+                self.bodyParameters = @{};
+            }
+            
+            __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:self.bodyParameters];
+            
+            [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                [newParameters setObject:obj forKey:key];
+            }];
+            
+            return [newParameters copy];
+        }
+            
+            
+            break;
     }
     
-    if (!self.parameters) {
-        self.parameters = @{};
-    }
-    
-   __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:self.parameters];
-    
-    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [newParameters setObject:obj forKey:key];
-    }];
-    
-    return [newParameters copy];
+
 }
 
 - (httpHeaderType *)addWithHttpHeaderFields:(httpHeaderType *)httpHeaderFields{
@@ -131,7 +183,7 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     if (self.httpHeaderFields == httpHeaderFields
         || !httpHeaderFields
         || httpHeaderFields.allKeys.count==0) {
-        return self.parameters;
+        return self.httpHeaderFields;
     }
     
     if (!self.httpHeaderFields) {
@@ -164,14 +216,35 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     request.HTTPMethod = [OCMoyaConfig getHTTPOCMMethod:self.method];
     request.allHTTPHeaderFields = self.httpHeaderFields;
     
-    id<OCMURLRequestSerialization> serializer = [[OCMHTTPRequestSerializer alloc] initWithType:self.parameterEncoding];
-    NSError *error;
-    NSURLRequest *newRequest = [serializer requestBySerializingRequest:request withParameters:self.parameters error:&error];
+    OCMHTTPRequestSerializer *serializer = [OCMRequestSerializer SerializerWithType:OCMParameterEncodingURL];
+    serializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", @"DELETE",@"POST", nil];//avoid some POST have url parameter
     
+    
+    //url encoding
+    NSError *error;
+    NSURLRequest *newRequest = [serializer requestBySerializingRequest:request withParameters:self.urlParameters error:&error];
+    
+    //encoding url parameter meet error
     if (error) {
-        NSLog(@"Convert the reqeust error the reqeut is %@ /n reason is %@",request,error);
+        NSLog(@"encoding the reqeust' url meet error the reqeut is %@ /n reason is %@",request,error);
+        return newRequest;
     }
     
+    //body encoding
+    if (self.method == OCMMethodPOST) {// it only work when POST
+        
+         OCMHTTPRequestSerializer *requestserialization = [OCMRequestSerializer SerializerWithType:self.parameterEncoding];
+        
+        NSError *bodyEncodingError;
+        newRequest = [requestserialization requestBySerializingRequest:newRequest withParameters:self.bodyParameters error:&bodyEncodingError];
+        
+        //encoding body meet error
+        if (bodyEncodingError) {
+            NSLog(@"Convert the reqeust's body meet error the reqeut is %@ /n reason is %@",newRequest,bodyEncodingError);
+            return newRequest;
+        }
+    }
+
     return newRequest;
 }
 

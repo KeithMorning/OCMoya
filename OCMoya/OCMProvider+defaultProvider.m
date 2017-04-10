@@ -22,7 +22,8 @@
                           return [[OCMEndpointSampleResponse alloc] initWithStatusCode:200 data:target.sampleData error:nil];
                       }
                                      method:OCMMethodGET
-                                 parameters:target.parameters
+                              urlParameters:target.urlParameters
+                             bodyParameters:target.bodyParameters
                           parameterEncoding:target.parameterEncoding
                            httpHeaderFields:nil];
 }

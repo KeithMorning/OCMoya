@@ -9,8 +9,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "OCMDefination.h"
 
-@interface AFHTTPRequestSerializer (OCMSerializer)
+@interface OCMRequestSerializer : NSObject
 
-- (instancetype)initWithType:(OCMParameterEncoding)parameterEncoding;
++ (OCMHTTPRequestSerializer *)SerializerWithType:(OCMParameterEncoding)parameterEncoding;
 
 @end

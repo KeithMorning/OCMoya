@@ -37,7 +37,9 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
 @property (nonatomic,copy,readonly) OCMEndpointSampleResponseClosure sampleResponseClosure;
 
-@property (nonatomic,copy,readonly) parameterType *parameters;
+@property (nonatomic,copy,readonly) parameterType *urlParameters;
+
+@property (nonatomic,copy,readonly) parameterType *bodyParameters;
 
 @property (nonatomic,assign,readonly) OCMParameterEncoding parameterEncoding;
 
@@ -48,11 +50,10 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 - (instancetype)initWithURL:(nonnull NSString *)url
       sampleResponseClosure:(nullable OCMEndpointSampleResponseClosure)closure
                      method:(OCMMethod)method
-                 parameters:(nullable NSDictionary<NSString *,id> *)parameters
+              urlParameters:(nullable NSDictionary<NSString *,id> *)urlParameters
+             bodyParameters:(nullable NSDictionary<NSString *,id> *)bodyParameters
           parameterEncoding:(OCMParameterEncoding)encoding
            httpHeaderFields:(nullable NSDictionary<NSString *,NSString *> *)httpHeaderFields;
-
-- (nonnull OCMEndpoint *)addingParameter:(nullable parameterType *)newparameter;
 
 - (nonnull OCMEndpoint *)addingHttpHeaderFields:(nullable httpHeaderType *)httpHeaderFields;
 

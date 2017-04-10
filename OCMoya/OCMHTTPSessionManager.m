@@ -31,12 +31,15 @@
                                  completion:(nullable completionClosure)completionClosure{
     
     __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil];
+    NSURLSessionDataTask * sessiontask =
     [self sessionDataTaskWithRequest:request uploadProgress:uploadProgressClosure downloadProgress:downloadProgressClosure completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
         task.endTime = CFAbsoluteTimeGetCurrent();
         if (completionClosure) {
             completionClosure(success,responseObject,error);
         }
     }];
+    
+    [task updateTask:sessiontask];
     
     if (self.startRequestsImmediately) {
         [task resume];
