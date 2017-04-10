@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OCMResponse.h"
 
-@interface OCMProgressReponse : NSObject
+@interface OCMProgressResponse : NSObject
 
 @property (nonatomic,strong,readonly) NSProgress *progressObject;
 

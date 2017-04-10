@@ -6,9 +6,9 @@
 //  Copyright © 2017 keithxi. All rights reserved.
 //
 
-#import "OCMProgressReponse.h"
+#import "OCMProgressResponse.h"
 
-@implementation OCMProgressReponse
+@implementation OCMProgressResponse
 
 - (instancetype)initWith:(NSProgress *)progress{
     if (self = [super init]) {

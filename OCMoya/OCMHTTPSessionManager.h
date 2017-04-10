@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
 #import "OCMDataRequestTask.h"
-#import "OCMProgressReponse.h"
+#import "OCMProgressResponse.h"
 #import "OCMResponse.h"
 #import "OCMoyaError.h"
 
 typedef void(^completionClosure)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error);
-typedef void(^progressClosure)(OCMProgressReponse *_Nullable uploadProgress);
+typedef void(^progressClosure)(OCMProgressResponse *_Nullable uploadProgress);
 
 @interface OCMHTTPSessionManager : OCMURLSessionManager
 
@@ -38,8 +38,8 @@ typedef void(^progressClosure)(OCMProgressReponse *_Nullable uploadProgress);
 
 
 - (nullable OCMDataRequestTask *)dataTaskWithRequest:(nonnull NSURLRequest *)request
-                             uploadProgress:(nullable void (^)(OCMProgressReponse * _Nullable uploadProgress)) uploadProgress
-                           downloadProgress:(nullable void (^)(OCMProgressReponse * _Nullable downloadProgress)) downloadProgress
+                             uploadProgress:(nullable void (^)(OCMProgressResponse * _Nullable uploadProgress)) uploadProgress
+                           downloadProgress:(nullable void (^)(OCMProgressResponse * _Nullable downloadProgress)) downloadProgress
                                           completion:(nullable void(^)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error))completionClosure;
 
 - (void)retryWithTask:(nonnull OCMRequestTask *)task

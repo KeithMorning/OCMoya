@@ -18,8 +18,8 @@
 		5343C9481E94BC7700E082F4 /* OCMHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343C9461E94BC7700E082F4 /* OCMHTTPSessionManager.m */; };
 		5343C94B1E94CBE800E082F4 /* OCMProvider+stub.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C9491E94CBE800E082F4 /* OCMProvider+stub.h */; };
 		5343C94C1E94CBE800E082F4 /* OCMProvider+stub.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343C94A1E94CBE800E082F4 /* OCMProvider+stub.m */; };
-		5343C94F1E94D42A00E082F4 /* OCMProgressReponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C94D1E94D42A00E082F4 /* OCMProgressReponse.h */; };
-		5343C9501E94D42A00E082F4 /* OCMProgressReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343C94E1E94D42A00E082F4 /* OCMProgressReponse.m */; };
+		5343C94F1E94D42A00E082F4 /* OCMProgressResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C94D1E94D42A00E082F4 /* OCMProgressResponse.h */; };
+		5343C9501E94D42A00E082F4 /* OCMProgressResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343C94E1E94D42A00E082F4 /* OCMProgressResponse.m */; };
 		5343C9531E94DBB000E082F4 /* OCMCancellableToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C9511E94DBB000E082F4 /* OCMCancellableToken.h */; };
 		5343C9541E94DBB000E082F4 /* OCMCancellableToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343C9521E94DBB000E082F4 /* OCMCancellableToken.m */; };
 		5343C9571E94E0B100E082F4 /* OCMRequestTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5343C9551E94E0B100E082F4 /* OCMRequestTask.h */; };
@@ -62,8 +62,8 @@
 		5343C9461E94BC7700E082F4 /* OCMHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMHTTPSessionManager.m; sourceTree = "<group>"; };
 		5343C9491E94CBE800E082F4 /* OCMProvider+stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMProvider+stub.h"; sourceTree = "<group>"; };
 		5343C94A1E94CBE800E082F4 /* OCMProvider+stub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMProvider+stub.m"; sourceTree = "<group>"; };
-		5343C94D1E94D42A00E082F4 /* OCMProgressReponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMProgressReponse.h; sourceTree = "<group>"; };
-		5343C94E1E94D42A00E082F4 /* OCMProgressReponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMProgressReponse.m; sourceTree = "<group>"; };
+		5343C94D1E94D42A00E082F4 /* OCMProgressResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMProgressResponse.h; sourceTree = "<group>"; };
+		5343C94E1E94D42A00E082F4 /* OCMProgressResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMProgressResponse.m; sourceTree = "<group>"; };
 		5343C9511E94DBB000E082F4 /* OCMCancellableToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMCancellableToken.h; sourceTree = "<group>"; };
 		5343C9521E94DBB000E082F4 /* OCMCancellableToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMCancellableToken.m; sourceTree = "<group>"; };
 		5343C9551E94E0B100E082F4 /* OCMRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRequestTask.h; sourceTree = "<group>"; };
@@ -183,8 +183,8 @@
 				5343C9461E94BC7700E082F4 /* OCMHTTPSessionManager.m */,
 				5343C9491E94CBE800E082F4 /* OCMProvider+stub.h */,
 				5343C94A1E94CBE800E082F4 /* OCMProvider+stub.m */,
-				5343C94D1E94D42A00E082F4 /* OCMProgressReponse.h */,
-				5343C94E1E94D42A00E082F4 /* OCMProgressReponse.m */,
+				5343C94D1E94D42A00E082F4 /* OCMProgressResponse.h */,
+				5343C94E1E94D42A00E082F4 /* OCMProgressResponse.m */,
 				5343C9511E94DBB000E082F4 /* OCMCancellableToken.h */,
 				5343C9521E94DBB000E082F4 /* OCMCancellableToken.m */,
 				5343C9551E94E0B100E082F4 /* OCMRequestTask.h */,
@@ -249,7 +249,7 @@
 				5343C95B1E96351200E082F4 /* OCMDataRequestTask.h in Headers */,
 				53FED1E51E971F57009E97D0 /* OCMCommonURLResponseSerialization.h in Headers */,
 				53D177FE1E88ABA70086F951 /* OCMoyaError.h in Headers */,
-				5343C94F1E94D42A00E082F4 /* OCMProgressReponse.h in Headers */,
+				5343C94F1E94D42A00E082F4 /* OCMProgressResponse.h in Headers */,
 				5343C9531E94DBB000E082F4 /* OCMCancellableToken.h in Headers */,
 				53D177F61E88A40A0086F951 /* OCMCancellable.h in Headers */,
 				53CFE4EC1E8618D00051EE07 /* OCMEndpoint.h in Headers */,
@@ -363,7 +363,7 @@
 			files = (
 				53FED1E61E971F57009E97D0 /* OCMCommonURLResponseSerialization.m in Sources */,
 				53DDA7D31E87838C00490C16 /* AFHTTPRequestSerializer+OCMSerializer.m in Sources */,
-				5343C9501E94D42A00E082F4 /* OCMProgressReponse.m in Sources */,
+				5343C9501E94D42A00E082F4 /* OCMProgressResponse.m in Sources */,
 				5343C9441E9493B600E082F4 /* OCMProvider+defaultProvider.m in Sources */,
 				53DDA7CB1E87679300490C16 /* OCMoyaConfig.m in Sources */,
 				5343C95C1E96351200E082F4 /* OCMDataRequestTask.m in Sources */,

@@ -16,4 +16,15 @@ FOUNDATION_EXPORT const unsigned char OCMoyaVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <OCMoya/PublicHeader.h>
 
-
+#import "OCMCancelableToken.h"
+#import "OCMoyaTask.h"
+#import "OCMoyaEndpoint.h"
+#import "OCMoyaProvider.h"
+#import "OCMoyaError.h"
+#import "OCMResponse.h"
+#import "OCMPlugin.h"
+#import "OCMResult.h"
+#import "OCMProgressResponse.h"
+#import "OCMHTTPSessionManager.h"
+#import "OCMRequestTask.h"
+#import "OCMDataRequestTask.h"

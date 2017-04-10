@@ -59,7 +59,7 @@
                               if (!uploadProgressClosure) {
                                   return;
                               }
-                              OCMProgressReponse *progress = [[OCMProgressReponse alloc] initWith:uploadProgress];
+                              OCMProgressResponse  *progress = [[OCMProgressResponse alloc] initWith:uploadProgress];
                               uploadProgressClosure(progress);
     }
                 
@@ -68,7 +68,7 @@
                             if (!downloadProgressClosure) {
                                 return ;
                             }
-                            OCMProgressReponse *progress = [[OCMProgressReponse alloc] initWith:downloadProgress];
+                            OCMProgressResponse *progress = [[OCMProgressResponse alloc] initWith:downloadProgress];
                             downloadProgressClosure(progress);
     }
                 
