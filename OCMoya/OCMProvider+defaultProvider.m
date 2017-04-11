@@ -14,14 +14,17 @@
 @implementation OCMProvider (defaultProvider)
 
 + (OCMEndpoint *)defaultEndpointMapping:(id<OCMTargetType>)target{
-    
-    NSString *urlstr = [target.baseURL URLByAppendingPathComponent:target.path].absoluteString;
+    NSString *path = [target.path copy];
+    if (![path hasPrefix:@"/"]) {
+        path = [@"/" stringByAppendingString:path];
+    }
+    NSString *urlstr = [target.baseURL stringByAppendingString:path];
     
     return [[OCMEndpoint alloc] initWithURL:urlstr
                       sampleResponseClosure:^OCMEndpointSampleResponse *{
                           return [[OCMEndpointSampleResponse alloc] initWithStatusCode:200 data:target.sampleData error:nil];
                       }
-                                     method:OCMMethodGET
+                                     method:target.meathod
                               urlParameters:target.urlParameters
                              bodyParameters:target.bodyParameters
                           parameterEncoding:target.parameterEncoding

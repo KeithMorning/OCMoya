@@ -15,7 +15,7 @@
 
 @protocol OCMTargetType <NSObject>
 
-@property (nonatomic,copy,readonly) NSURL *baseURL;
+@property (nonatomic,copy,readonly) NSString *baseURL;
 
 @property (nonatomic,copy) NSString *path;
 
