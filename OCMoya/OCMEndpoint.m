@@ -82,101 +82,58 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 
 - (OCMEndpoint *)addingHttpHeaderFields:(httpHeaderType *)httpHeaderFields{
     
-    return [self addingParameters:self.urlParameters
-                 httpHeaderFields:httpHeaderFields
-                parameterEncoding:self.parameterEncoding];
+    return [self addingURLParameters:self.urlParameters
+                      bodyParameters:self.bodyParameters
+                 httpHeaderFields:httpHeaderFields];
 
 }
 
-- (OCMEndpoint *)addingParameters:(parameterType *)parameters
-                 httpHeaderFields:(httpHeaderType *)httpHeaders
-                parameterEncoding:(OCMParameterEncoding)encoding{
+- (nonnull OCMEndpoint *)addingURLParameters:(nullable parameterType *)urlParameters
+                              bodyParameters:(nullable parameterType *)bodyParamters
+                            httpHeaderFields:(nullable httpHeaderType *)httpHeaders {
     
-    parameterType *newParameters = [self addWithParameters:parameters parameterType:encoding];
+    parameterType *newURLParameters = [self addWithParameters:urlParameters orignalParameters:self.urlParameters];
+    parameterType *newbodyParamters = [self addWithParameters:bodyParamters orignalParameters:self.bodyParameters];
+    
     httpHeaderType *newHttpHeaderFields = [self addWithHttpHeaderFields:httpHeaders];
     
-    
-    switch (encoding) {
-        case OCMParameterEncodingURL:
-        {
-            return [[OCMEndpoint alloc] initWithURL:self.url
-                              sampleResponseClosure:self.sampleResponseClosure
-                                             method:self.method
-                                      urlParameters:newParameters
-                                      bodyParameters:self.bodyParameters
-                                  parameterEncoding:encoding
-                                   httpHeaderFields:newHttpHeaderFields];
-        }
-            break;
-            
-        default:
-            return [[OCMEndpoint alloc] initWithURL:self.url
-                              sampleResponseClosure:self.sampleResponseClosure
-                                             method:self.method
-                                      urlParameters:self.urlParameters
-                                      bodyParameters:newParameters
-                                  parameterEncoding:encoding
-                                   httpHeaderFields:newHttpHeaderFields];
-            break;
-    }
+
+    return [[OCMEndpoint alloc] initWithURL:self.url
+                      sampleResponseClosure:self.sampleResponseClosure
+                                     method:self.method
+                              urlParameters:newURLParameters
+                              bodyParameters:newbodyParamters
+                          parameterEncoding:self.parameterEncoding
+                           httpHeaderFields:newHttpHeaderFields];
+
     
 
 
 }
 
 
-- (parameterType *)addWithParameters:(parameterType *)parameters parameterType:(OCMParameterEncoding)encodingType{
+- (parameterType *)addWithParameters:(parameterType *)parameters orignalParameters:(parameterType *)orginalParameters{
     
-    switch (encodingType) {
-        case OCMParameterEncodingURL:
-        {
-            if (self.urlParameters == parameters
-                || !parameters
-                || parameters.allKeys.count==0) {
-                return self.urlParameters;
-            }
-            
-            if (!self.urlParameters) {
-                self.urlParameters = @{};
-            }
-            
-            __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:self.urlParameters];
-            
-            [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-                [newParameters setObject:obj forKey:key];
-            }];
-            
-            return [newParameters copy];
-        }
-            break;
-            
-        default:
-        {
-            if (self.bodyParameters == parameters
-                || !parameters
-                || parameters.allKeys.count==0) {
-                return self.bodyParameters;
-            }
-            
-            if (!self.bodyParameters) {
-                self.bodyParameters = @{};
-            }
-            
-            __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:self.bodyParameters];
-            
-            [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-                [newParameters setObject:obj forKey:key];
-            }];
-            
-            return [newParameters copy];
-        }
-            
-            
-            break;
+    if (parameters == orginalParameters
+        || !parameters
+        || parameters.allKeys.count == 0) {
+        
+        return orginalParameters;
     }
     
-
-}
+    if (!orginalParameters) {
+        orginalParameters = @{};
+    }
+    
+    __block _M_parameterType *newParameters = [[NSMutableDictionary alloc] initWithDictionary:orginalParameters];
+    
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [newParameters setObject:obj forKey:key];
+    }];
+    
+    return [newParameters copy];
+    
+   }
 
 - (httpHeaderType *)addWithHttpHeaderFields:(httpHeaderType *)httpHeaderFields{
     

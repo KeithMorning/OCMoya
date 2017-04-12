@@ -57,9 +57,9 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
 - (nonnull OCMEndpoint *)addingHttpHeaderFields:(nullable httpHeaderType *)httpHeaderFields;
 
-- (nonnull OCMEndpoint *)addingParameters:(nullable parameterType *)parameters
-                         httpHeaderFields:(nullable httpHeaderType *)httpHeaders
-                        parameterEncoding:(OCMParameterEncoding)encoding;
+- (nonnull OCMEndpoint *)addingURLParameters:(nullable parameterType *)urlParameters
+                              bodyParameters:(nullable parameterType *)bodyparameters
+                         httpHeaderFields:(nullable httpHeaderType *)httpHeaders;
 
 - (nullable NSURLRequest *)adapt:(nonnull NSURLRequest *)request;
 
