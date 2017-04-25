@@ -19,7 +19,7 @@
 
 @property (nonatomic,copy) NSString *path;
 
-@property (nonatomic,assign) OCMMethod meathod;
+@property (nonatomic,assign) OCMMethod method;
 
 @property (nonatomic,copy) NSDictionary<NSString *,id> *bodyParameters;
 

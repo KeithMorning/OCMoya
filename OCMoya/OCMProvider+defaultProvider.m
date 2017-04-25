@@ -24,7 +24,7 @@
                       sampleResponseClosure:^OCMEndpointSampleResponse *{
                           return [[OCMEndpointSampleResponse alloc] initWithStatusCode:200 data:target.sampleData error:nil];
                       }
-                                     method:target.meathod
+                                     method:target.method
                               urlParameters:target.urlParameters
                              bodyParameters:target.bodyParameters
                           parameterEncoding:target.parameterEncoding
