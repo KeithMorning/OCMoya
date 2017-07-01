@@ -62,6 +62,7 @@ typedef NS_ENUM(NSUInteger, OCMParameterEncoding) {
     OCMParameterEncodingURL,
     OCMParameterEncodingJSON,
     OCMParameterEncodingPropertyList,
+    OCMParameterEncodingMultiPartForm,
 };
 
 

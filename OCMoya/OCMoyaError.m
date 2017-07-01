@@ -55,6 +55,10 @@ NSString *const OCMoyaErrorDomain = @"com.moya.netService";
     return [self errorDescription];
 }
 
+- (NSInteger)errorcode{
+
+    return self.error.code;
+}
 
 + (OCMoyaError *)requestMappingError{
 

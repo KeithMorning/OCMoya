@@ -9,6 +9,7 @@
 #import "OCMProvider.h"
 #import "OCMProvider+defaultProvider.h"
 #import "OCMProvider+stub.h"
+#import "OCMoyaTargetUploadTask.h"
 
 @implementation OCMProvider
 
@@ -112,8 +113,10 @@
                     plusginsWithCompletion(result);
                 };
                 
-                if ([target.taskType isKindOfClass:[OCMoyaTask class]]) {
+                if ([target.taskType isKindOfClass:[OCMoyaTargetTask class]] || !target.taskType) {
                      cancelToken = [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
+                }else if([target.taskType isKindOfClass:[OCMoyaTargetUploadMultipartTask class]]){
+                    cancelToken = [self sendUploadRequest:target request:prepareRequet queue:queue progress:progress completion:completion];
                 }else{
                     assert(@"NOT support for now");
                 }
@@ -178,6 +181,38 @@
     }];
     
    return [[OCMCancellableToken alloc] initWithRequestTask:task];
+}
+
+- (OCMCancellableToken *)sendUploadRequest:(id<OCMTargetType>)target
+                                   request:(NSURLRequest *)request
+                                     queue:(dispatch_queue_t)queue
+                                  progress:(progressBlock)progressClosure
+                                completion:(Completion)completion{
+
+    OCMRequestTask *task = [self.Manager uploadDataTaskWithRequest:request
+                                                    uploadProgress:progressClosure
+                                                        completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
+        
+                                                void(^excute)() = ^{
+                                                    if (success) {
+                                                        completion([[OCMResult alloc] initWithSuccess:responseObject]);
+                                                    }else{
+                                                        completion([[OCMResult alloc] initWithFailure:error]);
+                                                    }
+                                                };
+                                                
+                                                if (queue) {
+                                                    dispatch_async(queue, ^{
+                                                        excute();
+                                                    });
+                                                }else{
+                                                    excute();
+                                                }
+    }];
+    
+    
+    return [[OCMCancellableToken alloc] initWithRequestTask:task];
+    
 }
 
 @end

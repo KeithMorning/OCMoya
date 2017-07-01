@@ -20,7 +20,7 @@
     }
     NSString *urlstr = [target.baseURL stringByAppendingString:path];
     
-    return [[OCMEndpoint alloc] initWithURL:urlstr
+    OCMEndpoint *endPoint = [[OCMEndpoint alloc] initWithURL:urlstr
                       sampleResponseClosure:^OCMEndpointSampleResponse *{
                           return [[OCMEndpointSampleResponse alloc] initWithStatusCode:200 data:target.sampleData error:nil];
                       }
@@ -29,6 +29,13 @@
                              bodyParameters:target.bodyParameters
                           parameterEncoding:target.parameterEncoding
                            httpHeaderFields:nil];
+    if (target.parameterEncoding == OCMParameterEncodingMultiPartForm && [target.taskType isKindOfClass:[OCMoyaTargetUploadMultipartTask class]]) {
+       endPoint = [endPoint addingUpload:(OCMoyaTargetUploadMultipartTask *)target.taskType];
+    }
+    
+    return endPoint;
+    
+    
 }
 
 

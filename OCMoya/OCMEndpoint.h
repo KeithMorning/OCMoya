@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "OCMTargetType.h"
-#import "OCMoyaTask.h"
+#import "OCMoyaTargetTask.h"
 #import "OCMRequestTask.h"
+#import "OCMoyaTargetUploadTask.h"
 
 @interface OCMEndpointSampleResponse : NSObject
 
@@ -60,6 +61,8 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 - (nonnull OCMEndpoint *)addingURLParameters:(nullable parameterType *)urlParameters
                               bodyParameters:(nullable parameterType *)bodyparameters
                          httpHeaderFields:(nullable httpHeaderType *)httpHeaders;
+
+- (nonnull OCMEndpoint *)addingUpload:(nonnull OCMoyaTargetUploadMultipartTask *)targetTask;
 
 - (nullable NSURLRequest *)adapt:(nonnull NSURLRequest *)request;
 

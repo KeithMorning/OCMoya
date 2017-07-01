@@ -11,7 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
-#import "OCMoyaTask.h"
+#import "OCMoyaTargetTask.h"
 
 @protocol OCMTargetType <NSObject>
 
@@ -29,7 +29,7 @@
 
 @property (nonatomic,copy) NSData *sampleData;
 
-@property (nonatomic,strong) OCMoyaTask *taskType;
+@property (nonatomic,strong) OCMoyaTargetTask *taskType;
 
 @end
 

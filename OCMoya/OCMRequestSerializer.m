@@ -33,6 +33,13 @@
             
             return jsonRequestSerializer;
         }
+        case OCMParameterEncodingMultiPartForm:
+        {
+            AFHTTPRequestSerializer *RequestSerializer = [AFHTTPRequestSerializer serializer];
+            return RequestSerializer;
+            break;
+        }
+        
             
     }
 }

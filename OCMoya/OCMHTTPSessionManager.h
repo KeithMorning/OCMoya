@@ -36,11 +36,17 @@ typedef void(^progressClosure)(OCMProgressResponse *_Nullable uploadProgress);
 @property (nonatomic,assign) BOOL startRequestsImmediately;
 
 
-
+//HTTP request
 - (nullable OCMDataRequestTask *)dataTaskWithRequest:(nonnull NSURLRequest *)request
                              uploadProgress:(nullable void (^)(OCMProgressResponse * _Nullable uploadProgress)) uploadProgress
                            downloadProgress:(nullable void (^)(OCMProgressResponse * _Nullable downloadProgress)) downloadProgress
                                           completion:(nullable void(^)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error))completionClosure;
+
+//upload reqeust
+- (nullable OCMDataRequestTask *)uploadDataTaskWithRequest:(nonnull NSURLRequest *)request
+                                   uploadProgress:(nullable progressClosure) uploadProgressClosure
+                                       completion:(nullable completionClosure)completionClosure;
+
 
 - (void)retryWithTask:(nonnull OCMRequestTask *)task
                 error:(nullable OCMoyaError *)error

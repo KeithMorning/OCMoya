@@ -100,6 +100,65 @@
     return dataTask;
 }
 
+#pragma mark - upload
+
+- (OCMDataRequestTask *)uploadDataTaskWithRequest:(NSURLRequest *)request
+                             uploadProgress:(nullable progressClosure) uploadProgressClosure
+                                 completion:(nullable completionClosure)completionClosure{
+    
+    __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil];
+    NSURLSessionDataTask * sessiontask =
+    [self uploadDatatask:request progress:uploadProgressClosure completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
+        task.endTime = CFAbsoluteTimeGetCurrent();
+        if (completionClosure) {
+            completionClosure(success,responseObject,error);
+        }
+    }];
+    
+    [task updateTask:sessiontask];
+    
+    if (self.startRequestsImmediately) {
+        [task resume];
+    }
+    return task;
+}
+
+- (NSURLSessionDataTask *)uploadDatatask:(NSURLRequest *)request
+                      progress:(nullable progressClosure)uploadProgressClosure
+                       completion:(nullable completionClosure)completionClosure
+{
+    
+    __block NSURLSessionDataTask *task = [self uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+        if (!uploadProgressClosure) {
+            return;
+        }
+        OCMProgressResponse  *progress = [[OCMProgressResponse alloc] initWith:uploadProgress];
+        uploadProgressClosure(progress);
+    } completionHandler:^(NSURLResponse * _Nonnull urlresponse, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)urlresponse;
+        OCMResponse *response = [[OCMResponse alloc] initWithStatusCode:httpResponse.statusCode
+                                                                   data:responseObject
+                                                                request:request
+                                                               response:httpResponse];
+        if (completionClosure) {
+            if (error) {
+                OCMoyaError *aError = [[OCMoyaError alloc] initWithError:error
+                                                               errorType:OCMoyaErrorTypeHttpFailed
+                                                                response:response];
+                completionClosure(NO,response,aError);
+            }else{
+                completionClosure(YES,response,nil);
+            }
+        }
+     
+    }];
+    
+    return task;
+}
+
+#pragma mark - retry a Failed Task
+
 - (void)retryWithTask:(OCMRequestTask *)task
                 error:(OCMoyaError *)error
        uploadProgress:(nullable progressClosure) uploadProgressClosure

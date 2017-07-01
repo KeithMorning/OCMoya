@@ -48,6 +48,8 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 
 @property (nonatomic,copy) httpHeaderType *httpHeaderFields;
 
+@property (nonatomic,copy) NSArray<OCMUploadFormProvider *> *uploadTasks;
+
 @end
 
 @implementation OCMEndpoint
@@ -88,6 +90,20 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 
 }
 
+- (OCMEndpoint *)addingUpload:(OCMoyaTargetUploadMultipartTask *)targetTask{
+    
+    if(!targetTask.providers || !targetTask.providers.count){
+        
+        return self;
+    }
+    
+    if(!self.uploadTasks){ self.uploadTasks = @[]; }
+    NSMutableArray *temptasks = [self.uploadTasks mutableCopy];
+    [temptasks addObjectsFromArray:targetTask.providers];
+    self.uploadTasks = [temptasks copy];
+    return self;
+}
+
 - (nonnull OCMEndpoint *)addingURLParameters:(nullable parameterType *)urlParameters
                               bodyParameters:(nullable parameterType *)bodyParamters
                             httpHeaderFields:(nullable httpHeaderType *)httpHeaders {
@@ -97,18 +113,11 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     
     httpHeaderType *newHttpHeaderFields = [self addWithHttpHeaderFields:httpHeaders];
     
-
-    return [[OCMEndpoint alloc] initWithURL:self.url
-                      sampleResponseClosure:self.sampleResponseClosure
-                                     method:self.method
-                              urlParameters:newURLParameters
-                              bodyParameters:newbodyParamters
-                          parameterEncoding:self.parameterEncoding
-                           httpHeaderFields:newHttpHeaderFields];
-
+    self.urlParameters = newURLParameters;
+    self.bodyParameters = newbodyParamters;
+    self.httpHeaderFields = newHttpHeaderFields;
     
-
-
+    return self;
 }
 
 
@@ -157,6 +166,7 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
 }
 
 
+
 - (NSURLRequest *)urlRequest{
     if (!self.url) {
         return nil;
@@ -169,39 +179,77 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
         return nil;
     }
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = [OCMoyaConfig getHTTPOCMMethod:self.method];
-    request.allHTTPHeaderFields = self.httpHeaderFields;
+    OCMHTTPRequestSerializer *URLEncodingserializer = [OCMRequestSerializer SerializerWithType:OCMParameterEncodingURL];
+    URLEncodingserializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", @"DELETE",@"POST", nil];//avoid some POST have url parameter
     
-    OCMHTTPRequestSerializer *serializer = [OCMRequestSerializer SerializerWithType:OCMParameterEncodingURL];
-    serializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", @"DELETE",@"POST", nil];//avoid some POST have url parameter
-    
+    NSString *HTTPMethod = [OCMoyaConfig getHTTPOCMMethod:self.method];
     
     //url encoding
     NSError *error;
-    NSURLRequest *newRequest = [serializer requestBySerializingRequest:request withParameters:self.urlParameters error:&error];
+    NSMutableURLRequest *request = [URLEncodingserializer requestWithMethod:HTTPMethod URLString:self.url parameters:self.urlParameters error:&error];
     
     //encoding url parameter meet error
     if (error) {
         NSLog(@"encoding the reqeust' url meet error the reqeut is %@ /n reason is %@",request,error);
-        return newRequest;
+        return request;
     }
+
+
     
     //body encoding
+    
     if (self.method == OCMMethodPOST) {// it only work when POST
         
+    
          OCMHTTPRequestSerializer *requestserialization = [OCMRequestSerializer SerializerWithType:self.parameterEncoding];
         
         NSError *bodyEncodingError;
-        newRequest = [requestserialization requestBySerializingRequest:newRequest withParameters:self.bodyParameters error:&bodyEncodingError];
+        if (self.parameterEncoding == OCMParameterEncodingMultiPartForm) {
+            NSMutableURLRequest *mutipartReqeust = [requestserialization multipartFormRequestWithMethod:HTTPMethod
+                                    URLString:request.URL.absoluteString
+                                    parameters:self.bodyParameters
+                    constructingBodyWithBlock:^(id<OCMMultipartFormData>  _Nonnull formData) {
+                        for (OCMUploadFormProvider *provider in self.uploadTasks) {
+                            if ([provider isKindOfClass:[OCMUploadFormDataProvider class]]) {
+                                OCMUploadFormDataProvider *dataProvider = (OCMUploadFormDataProvider *)provider;
+                                [formData appendPartWithFormData:dataProvider.data name:dataProvider.name];
+                            }else if ([provider isKindOfClass:[OCMUploadFormFileProvider class]]){
+                            
+                                OCMUploadFormFileProvider *fileProvider = (OCMUploadFormFileProvider *)provider;
+                                [formData appendPartWithFileURL:fileProvider.file name:fileProvider.name fileName:fileProvider.fileName mimeType:fileProvider.mineType error:nil];
+                            }else if([provider isKindOfClass:[OCMUploadFormStreamProvider class]]){
+                                
+                                OCMUploadFormStreamProvider *streamProvider = (OCMUploadFormStreamProvider *)provider;
+                                [formData appendPartWithInputStream:streamProvider.inputStream name:streamProvider.name fileName:streamProvider.fileName length:streamProvider.offset mimeType:streamProvider.mineType];
+                            }else{
+                            
+                                NSLog(@"unspport upload provider");
+                            }
+                        
+                        }
+                        
+                    } error:&bodyEncodingError];
+            
+            request = mutipartReqeust;
+            
+        }else{
         
-        //encoding body meet error
-        if (bodyEncodingError) {
-            NSLog(@"Convert the reqeust's body meet error the reqeut is %@ /n reason is %@",newRequest,bodyEncodingError);
-            return newRequest;
+            request = [[requestserialization requestBySerializingRequest:[request copy] withParameters:self.bodyParameters error:&bodyEncodingError] mutableCopy];
+            
+            //encoding body meet error
+            if (bodyEncodingError) {
+                NSLog(@"Convert the reqeust's body meet error the reqeut is %@ /n reason is %@",request,bodyEncodingError);
+                return request;
+            }
         }
+       
     }
-
+    
+    
+    [self.httpHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [request setValue:obj forHTTPHeaderField:key];
+    }];
+    NSURLRequest *newRequest = [request copy];
     return newRequest;
 }
 
