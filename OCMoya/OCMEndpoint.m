@@ -212,7 +212,7 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
                         for (OCMUploadFormProvider *provider in self.uploadTasks) {
                             if ([provider isKindOfClass:[OCMUploadFormDataProvider class]]) {
                                 OCMUploadFormDataProvider *dataProvider = (OCMUploadFormDataProvider *)provider;
-                                [formData appendPartWithFormData:dataProvider.data name:dataProvider.name];
+                                [formData appendPartWithFileData:dataProvider.data name:dataProvider.name fileName:dataProvider.fileName mimeType:dataProvider.mineType];
                             }else if ([provider isKindOfClass:[OCMUploadFormFileProvider class]]){
                             
                                 OCMUploadFormFileProvider *fileProvider = (OCMUploadFormFileProvider *)provider;
