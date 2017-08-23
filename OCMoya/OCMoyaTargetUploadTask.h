@@ -24,11 +24,11 @@
 
 @property (nonatomic,copy,readonly) NSString *fileName;
 
-@property (nonatomic,copy,readonly) NSString *mineType;
+@property (nonatomic,copy,readonly) NSString *mimeType;
 
 - (instancetype)initWithName:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType;
+                    mimeType:(NSString *)mimeType;
 
 @end
 
@@ -39,7 +39,7 @@
 - (instancetype)initWithData:(NSData *)data
                         name:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType;
+                    mimeType:(NSString *)mimeType;
 
 @end
 
@@ -50,7 +50,7 @@
 - (instancetype)initWithFile:(NSURL *)url
                         name:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType;
+                    mimeType:(NSString *)mimeType;
 
 @end
 
@@ -64,7 +64,7 @@
                        offset:(uint64_t)offset
                          name:(NSString *)name
                      fileName:(NSString *)fileName
-                     mineType:(NSString *)mineType;
+                     mimeType:(NSString *)mimeType;
 
 
 @end

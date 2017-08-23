@@ -14,11 +14,15 @@
 @implementation OCMProvider (defaultProvider)
 
 + (OCMEndpoint *)defaultEndpointMapping:(id<OCMTargetType>)target{
+    NSString *urlstr = target.baseURL;
     NSString *path = [target.path copy];
-    if (![path hasPrefix:@"/"]) {
+    if (path && ![path hasPrefix:@"/"]) {
         path = [@"/" stringByAppendingString:path];
     }
-    NSString *urlstr = [target.baseURL stringByAppendingString:path];
+    
+    if (path) {
+        urlstr =[urlstr stringByAppendingString:path];
+    }
     
     OCMEndpoint *endPoint = [[OCMEndpoint alloc] initWithURL:urlstr
                       sampleResponseClosure:^OCMEndpointSampleResponse *{

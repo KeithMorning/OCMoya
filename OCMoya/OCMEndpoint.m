@@ -212,15 +212,15 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
                         for (OCMUploadFormProvider *provider in self.uploadTasks) {
                             if ([provider isKindOfClass:[OCMUploadFormDataProvider class]]) {
                                 OCMUploadFormDataProvider *dataProvider = (OCMUploadFormDataProvider *)provider;
-                                [formData appendPartWithFileData:dataProvider.data name:dataProvider.name fileName:dataProvider.fileName mimeType:dataProvider.mineType];
+                                [formData appendPartWithFileData:dataProvider.data name:dataProvider.name fileName:dataProvider.fileName mimeType:dataProvider.mimeType];
                             }else if ([provider isKindOfClass:[OCMUploadFormFileProvider class]]){
                             
                                 OCMUploadFormFileProvider *fileProvider = (OCMUploadFormFileProvider *)provider;
-                                [formData appendPartWithFileURL:fileProvider.file name:fileProvider.name fileName:fileProvider.fileName mimeType:fileProvider.mineType error:nil];
+                                [formData appendPartWithFileURL:fileProvider.file name:fileProvider.name fileName:fileProvider.fileName mimeType:fileProvider.mimeType error:nil];
                             }else if([provider isKindOfClass:[OCMUploadFormStreamProvider class]]){
                                 
                                 OCMUploadFormStreamProvider *streamProvider = (OCMUploadFormStreamProvider *)provider;
-                                [formData appendPartWithInputStream:streamProvider.inputStream name:streamProvider.name fileName:streamProvider.fileName length:streamProvider.offset mimeType:streamProvider.mineType];
+                                [formData appendPartWithInputStream:streamProvider.inputStream name:streamProvider.name fileName:streamProvider.fileName length:streamProvider.offset mimeType:streamProvider.mimeType];
                             }else{
                             
                                 NSLog(@"unspport upload provider");

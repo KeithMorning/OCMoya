@@ -25,27 +25,29 @@
         _stubClosure = stubClosure;
         _Manager = manager;
         _plugins = plugins;
+        
+        if (!_endpointClosure) {
+            _endpointClosure = OCMProvider.defaultEndpointMappingClosure;
+        }
+        
+        if (!_requestClosure) {
+            _requestClosure = OCMProvider.defaultRequestMappingClosure;
+        }
+        
+        if (!_stubClosure) {
+            _stubClosure = [OCMProvider neverStub];
+        }
+        
+        if (!_Manager) {
+            _Manager = [OCMProvider defaultHTTPManager];
+        }
+        
+        if (_plugins) {
+            _plugins = @[];
+        }
     }
     
-    if (!_endpointClosure) {
-        _endpointClosure = OCMProvider.defaultEndpointMappingClosure;
-    }
-    
-    if (!_requestClosure) {
-        _requestClosure = OCMProvider.defaultRequestMappingClosure;
-    }
-    
-    if (!_stubClosure) {
-        _stubClosure = [OCMProvider neverStub];
-    }
-    
-    if (!_Manager) {
-        _Manager = [OCMProvider defaultHTTPManager];
-    }
-    
-    if (_plugins) {
-        _plugins = @[];
-    }
+
 
     
     
@@ -113,10 +115,13 @@
                     plusginsWithCompletion(result);
                 };
                 
-                if ([target.taskType isKindOfClass:[OCMoyaTargetTask class]] || !target.taskType) {
+                if (!target.taskType) {
                      cancelToken = [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
                 }else if([target.taskType isKindOfClass:[OCMoyaTargetUploadMultipartTask class]]){
                     cancelToken = [self sendUploadRequest:target request:prepareRequet queue:queue progress:progress completion:completion];
+                }else if ([target.taskType isKindOfClass:[OCMoyaTargetTask class]]){
+                    cancelToken = [self sendRequest:target request:prepareRequet queue:queue progress:progress completion:netCompletion];
+                
                 }else{
                     assert(@"NOT support for now");
                 }

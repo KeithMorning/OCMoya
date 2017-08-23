@@ -38,7 +38,7 @@
 
 @property (nonatomic,copy) NSString *fileName;
 
-@property (nonatomic,copy) NSString *mineType;
+@property (nonatomic,copy) NSString *mimeType;
 
 @end
 
@@ -46,12 +46,12 @@
 
 - (instancetype)initWithName:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType{
+                    mimeType:(NSString *)mimeType{
 
     if (self = [super init]) {
         _name = name;
         _fileName = fileName;
-        _mineType = mineType;
+        _mimeType = mimeType;
     }
     
     return self;
@@ -71,9 +71,9 @@
 - (instancetype)initWithData:(NSData *)data
                         name:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType{
+                    mimeType:(NSString *)mimeType{
 
-    if (self = [super initWithName:name fileName:fileName mineType:mineType]) {
+    if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
         _data = data;
     }
     
@@ -93,9 +93,9 @@
 - (instancetype)initWithFile:(NSURL *)url
                         name:(NSString *)name
                     fileName:(NSString *)fileName
-                    mineType:(NSString *)mineType{
+                    mimeType:(NSString *)mimeType{
 
-    if (self = [super initWithName:name fileName:fileName mineType:mineType]) {
+    if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
         _file = url;
     }
     
@@ -118,9 +118,9 @@
                        offset:(uint64_t)offset
                          name:(NSString *)name
                      fileName:(NSString *)fileName
-                     mineType:(NSString *)mineType{
+                     mimeType:(NSString *)mimeType{
 
-    if (self = [super initWithName:name fileName:fileName mineType:mineType]) {
+    if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
         _inputStream = inputStream;
         _offset = offset;
     }
