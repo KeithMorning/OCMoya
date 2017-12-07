@@ -11,6 +11,9 @@
 #import "OCMProvider+stub.h"
 #import "OCMoyaTargetUploadTask.h"
 
+@interface OCMProvider()<OCMRequestRetrier>
+@end
+
 @implementation OCMProvider
 
 - (instancetype)initWithEndpointClosure:(EndpointClosure)enpointClosure
@@ -40,6 +43,7 @@
         
         if (!_Manager) {
             _Manager = [OCMProvider defaultHTTPManager];
+            _Manager.retrier = self;
         }
         
         if (_plugins) {
@@ -162,16 +166,17 @@
                             progress:(progressBlock)progressClosure
                           completion:(Completion)completion{
     
-   OCMRequestTask *task = [self.Manager dataTaskWithRequest:request
+    OCMRequestTask *task = [self.Manager dataTaskWithRequest:request target:target
                        uploadProgress:nil
                      downloadProgress:nil
                            completion:^(BOOL success, OCMResponse * _Nullable responseObject, OCMoyaError * _Nullable error) {
-                               
+
                                void(^excute)() = ^{
                                    if (success) {
                                        completion([[OCMResult alloc] initWithSuccess:responseObject]);
-                                   }else{
+                                   }else{//failed retry if need
                                        completion([[OCMResult alloc] initWithFailure:error]);
+       
                                    }
                                };
                                
@@ -195,6 +200,7 @@
                                 completion:(Completion)completion{
 
     OCMRequestTask *task = [self.Manager uploadDataTaskWithRequest:request
+                                                            target:target
                                                     uploadProgress:progressClosure
                                                         completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
         
@@ -218,6 +224,30 @@
     
     return [[OCMCancellableToken alloc] initWithRequestTask:task];
     
+}
+
+- (void)shouldretryRequest:(OCMRequestTask *)task
+                    target:(id<OCMTargetType>)target
+                   manager:(OCMURLSessionManager *)sessionManager
+                  response:(OCMResponse *)responseObj
+                     error:(OCMoyaError *)error
+                completion:(requestRetryCompletion)completion{
+    
+    
+    if (error) {//network or service error
+        if (task.retryCount < target.retryMaxCount) {
+            completion(YES,target.retryDelay);
+        }else{
+            completion(NO,target.retryDelay);
+        }
+    }else{ // custom service error judge it from the service response
+        if (self.delegate && [self.delegate respondsToSelector:@selector(shouldRetryWithTaget:hasRetryCount:response:completion:)]) {
+            [self.delegate shouldRetryWithTaget:target hasRetryCount:task.retryCount response:responseObj completion:completion];
+        }else{
+             completion(NO,target.retryDelay);
+        }
+       
+    }
 }
 
 @end

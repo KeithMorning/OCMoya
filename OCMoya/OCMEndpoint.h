@@ -30,7 +30,7 @@ typedef OCMEndpointSampleResponse*(^OCMEndpointSampleResponseClosure)(void);
 typedef NSDictionary<NSString *,id> parameterType;
 typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
-@interface OCMEndpoint : NSObject<OCMRequestAdapter>
+@interface OCMEndpoint : NSObject
 
 @property (nonatomic,copy,readonly) NSString *url;
 
@@ -63,8 +63,6 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
                          httpHeaderFields:(nullable httpHeaderType *)httpHeaders;
 
 - (nonnull OCMEndpoint *)addingUpload:(nonnull OCMoyaTargetUploadMultipartTask *)targetTask;
-
-- (nullable NSURLRequest *)adapt:(nonnull NSURLRequest *)request;
 
 
 @end

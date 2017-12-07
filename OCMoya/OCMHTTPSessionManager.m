@@ -26,17 +26,35 @@
 }
 
 - (OCMDataRequestTask *)dataTaskWithRequest:(NSURLRequest *)request
+                                     target:(nullable id<OCMTargetType>)target
                              uploadProgress:(nullable progressClosure) uploadProgressClosure
                            downloadProgress:(nullable progressClosure) downloadProgressClosure
                                  completion:(nullable completionClosure)completionClosure{
     
-    __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil];
+    __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil orginalTarget:target];
     NSURLSessionDataTask * sessiontask =
     [self sessionDataTaskWithRequest:request uploadProgress:uploadProgressClosure downloadProgress:downloadProgressClosure completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
         task.endTime = CFAbsoluteTimeGetCurrent();
         if (completionClosure) {
-            completionClosure(success,responseObject,error);
+            
+            //check if need retry first
+            if (self.retrier && [self.retrier respondsToSelector:@selector(shouldretryRequest:target:manager:response:error:completion:)]) {
+                [self retryWithTask:task error:error target:target response:responseObject uploadProgress:uploadProgressClosure downloadProgress:downloadProgressClosure completion:completionClosure];
+                return;
+            }
+            
+            if (!success) {//network or service error
+
+                completionClosure(NO,nil,error);
+
+            }else{ //request success, your custom service error
+
+                completionClosure(success,responseObject,error);
+            }
+                
         }
+        
+        
     }];
     
     [task updateTask:sessiontask];
@@ -49,13 +67,13 @@
 
 
 - (NSURLSessionDataTask *)sessionDataTaskWithRequest:(NSURLRequest *)request
-                                  uploadProgress:(nullable progressClosure) uploadProgressClosure
-                                downloadProgress:(nullable progressClosure) downloadProgressClosure
-                                    completion:(nullable completionClosure)completionClosure
+                                      uploadProgress:(nullable progressClosure) uploadProgressClosure
+                                    downloadProgress:(nullable progressClosure) downloadProgressClosure
+                                          completion:(nullable completionClosure)completionClosure
 {
     
     __block NSURLSessionDataTask *dataTask = nil;
-
+    
     dataTask = [self dataTaskWithRequest:request
                           uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
                               
@@ -64,7 +82,7 @@
                               }
                               OCMProgressResponse  *progress = [[OCMProgressResponse alloc] initWith:uploadProgress];
                               uploadProgressClosure(progress);
-    }
+                          }
                 
                         downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
                             
@@ -73,7 +91,7 @@
                             }
                             OCMProgressResponse *progress = [[OCMProgressResponse alloc] initWith:downloadProgress];
                             downloadProgressClosure(progress);
-    }
+                        }
                 
                        completionHandler:^(NSURLResponse * _Nonnull urlresponse, id  _Nullable responseObject, NSError * _Nullable error) {
                            
@@ -94,8 +112,8 @@
                                }
                            }
                            
-        
-    }];
+                           
+                       }];
     
     return dataTask;
 }
@@ -103,10 +121,11 @@
 #pragma mark - upload
 
 - (OCMDataRequestTask *)uploadDataTaskWithRequest:(NSURLRequest *)request
-                             uploadProgress:(nullable progressClosure) uploadProgressClosure
-                                 completion:(nullable completionClosure)completionClosure{
+                                           target:(nullable id<OCMTargetType>)target
+                                   uploadProgress:(nullable progressClosure) uploadProgressClosure
+                                       completion:(nullable completionClosure)completionClosure{
     
-    __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil];
+    __block OCMDataRequestTask *task = [[OCMDataRequestTask alloc] initWithSession:self.session requestTask:nil orginalTarget:target];
     NSURLSessionDataTask * sessiontask =
     [self uploadDatatask:request progress:uploadProgressClosure completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
         task.endTime = CFAbsoluteTimeGetCurrent();
@@ -124,8 +143,8 @@
 }
 
 - (NSURLSessionDataTask *)uploadDatatask:(NSURLRequest *)request
-                      progress:(nullable progressClosure)uploadProgressClosure
-                       completion:(nullable completionClosure)completionClosure
+                                progress:(nullable progressClosure)uploadProgressClosure
+                              completion:(nullable completionClosure)completionClosure
 {
     
     __block NSURLSessionDataTask *task = [self uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -151,7 +170,7 @@
                 completionClosure(YES,response,nil);
             }
         }
-     
+        
     }];
     
     return task;
@@ -161,63 +180,89 @@
 
 - (void)retryWithTask:(OCMRequestTask *)task
                 error:(OCMoyaError *)error
+               target:(id<OCMTargetType>)target
+             response:(id)responseObj
        uploadProgress:(nullable progressClosure) uploadProgressClosure
      downloadProgress:(nullable progressClosure) downloadProgressClosure
            completion:(nullable completionClosure)completionClosure{
     
-    if (![self.retrier respondsToSelector:@selector(shouldretryRequest:manager:error:completion:)]) {
+    if (![self.retrier respondsToSelector:@selector(shouldretryRequest:target:manager:response:error:completion:)]) {
+        if (error) {
+            completionClosure(NO,nil,error);
+        }else{
+            completionClosure(YES,responseObj,nil);
+        }
+        
         return;
     }
     
     __weak typeof(self) weakself = self;
     [self.retrier shouldretryRequest:task
-                                 manager:self
-                                   error:error
-                              completion:^(BOOL shouldRetry, NSTimeInterval timeDelay) {
-                                  __strong typeof(self) strongself = weakself;
-                                  if (!shouldRetry) {
-                                      return;
-                                  }
-                                  
-                                  void(^excute)() = ^{
-                                  
-                                      NSURLSessionDataTask  * newDataTask = [strongself convertTask:task
-                                                                                     uploadProgress:uploadProgressClosure
-                                                                                   downloadProgress:downloadProgressClosure
-                                                                                         completion:^(BOOL success, id  _Nullable responseObject, OCMoyaError * _Nullable error) {
-                                                                                             
-                                                                                             task.endTime = CFAbsoluteTimeGetCurrent();
-                                                                                             completionClosure(success,responseObject,error);
-                                                                                             
-                                                                                         }];
-                                      
-                                      [task updateTask:newDataTask];
-                                      [task resume];
-                                  };
-                                  
-                                  if(timeDelay>0){
-                                      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                          excute();
-                                      });
+                              target:target
+                             manager:self
+                            response:responseObj
+                               error:error
+                          completion:^(BOOL shouldRetry, NSTimeInterval timeDelay) {
+                              __strong typeof(self) strongself = weakself;
+                              if (!shouldRetry) {
+                                  if (error) {
+                                      completionClosure(NO,nil,error);
                                   }else{
-                                      excute();
+                                      completionClosure(YES,responseObj,nil);
                                   }
-        
-                              }];
+                                  return;
+                              }
+                              
+                              void(^excute)() = ^{
+                                  
+                                  NSURLSessionTask  * newDataTask = [strongself
+                                                                     convertTask:task
+                                                                     orginalTarget:target
+                                                                     uploadProgress:uploadProgressClosure
+                                                                     downloadProgress:downloadProgressClosure
+                                                                     completion:^(BOOL success, id  _Nullable newresponseObject, OCMoyaError * _Nullable newerror) {
+                                                                         
+                                                                         //retry if need
+                                                                         [strongself retryWithTask:task
+                                                                                             error:newerror
+                                                                                            target:target
+                                                                                          response:newresponseObject uploadProgress:uploadProgressClosure downloadProgress:downloadProgressClosure completion:completionClosure];
+                                                                        
+                                                                         task.endTime = CFAbsoluteTimeGetCurrent();
+                                                                         
+                                                                     }];
+                                  
+
+                                  [task updateTask:newDataTask];//update the session task
+                                  [task increaseRertyCount];//increase the count
+                                  [task resume];
+                              };
+                              
+                              if(timeDelay>0){
+                                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                      excute();
+                                  });
+                              }else{
+                                  excute();
+                              }
+                              
+                          }];
     
 }
 
-- (NSURLSessionDataTask *)convertTask:(OCMRequestTask *)orignalTask
-                              uploadProgress:(nullable progressClosure) uploadProgressClosure
-                            downloadProgress:(nullable progressClosure) downloadProgressClosure
-                                  completion:(nullable completionClosure)completionClosure{
+- (NSURLSessionTask *)convertTask:(OCMRequestTask *)orignalTask
+                    orginalTarget:(id<OCMTargetType>)orignalTarget
+                   uploadProgress:(nullable progressClosure) uploadProgressClosure
+                 downloadProgress:(nullable progressClosure) downloadProgressClosure
+                       completion:(nullable completionClosure)completionClosure{
     if(!orignalTask){
         return nil;
     };
     
     NSURLRequest *newrequest = nil;
-    if ([orignalTask.requestAdapter respondsToSelector:@selector(adapt:)]) {
-        newrequest = [orignalTask.requestAdapter adapt:orignalTask.request];
+    if ([self.taskConverter respondsToSelector:@selector(taskWithTask:target:)]) {
+        NSURLSessionTask *newtask = [self.taskConverter taskWithTask:orignalTask.task target:orignalTarget];
+        return newtask;
         
     }else{
         newrequest = [orignalTask.request copy];
@@ -237,7 +282,7 @@
 }
 
 - (instancetype)initWithCoder:(NSCoder *)decoder {
-
+    
     NSURLSessionConfiguration *configuration = [decoder decodeObjectOfClass:[NSURLSessionConfiguration class] forKey:@"sessionConfiguration"];
     if (!configuration) {
         NSString *configurationIdentifier = [decoder decodeObjectOfClass:[NSString class] forKey:@"identifier"];

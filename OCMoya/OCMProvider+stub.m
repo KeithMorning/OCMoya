@@ -61,7 +61,7 @@
 
 - (void)notifyPluginsOfImpendingStub:(NSURLRequest *)request target:(id<OCMTargetType>) target{
     
-    OCMRequestTask *requestTask = [self.Manager dataTaskWithRequest:request uploadProgress:nil downloadProgress:nil completion:nil];
+    OCMRequestTask *requestTask = [self.Manager dataTaskWithRequest:request target:target uploadProgress:nil downloadProgress:nil completion:nil];
     [requestTask cancel];
     
     [self.plugins enumerateObjectsUsingBlock:^(id<OCMPlugin>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

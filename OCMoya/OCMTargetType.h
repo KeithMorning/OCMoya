@@ -31,6 +31,10 @@
 
 @property (nonatomic,strong) OCMoyaTargetTask *taskType;
 
+@property (nonatomic,assign) NSUInteger retryMaxCount;
+
+@property (nonatomic,assign) NSTimeInterval retryDelay;
+
 @end
 
 

@@ -22,7 +22,7 @@
 - (instancetype)initWithFormProviders:(NSArray<OCMUploadFormProvider *> *)providers; {
     
     if(self = [super init]){
-        _providers = providers;
+        self.providers = providers;
     }
     
     return self;
@@ -49,9 +49,9 @@
                     mimeType:(NSString *)mimeType{
 
     if (self = [super init]) {
-        _name = name;
-        _fileName = fileName;
-        _mimeType = mimeType;
+        self.name = name;
+        self.fileName = fileName;
+        self.mimeType = mimeType;
     }
     
     return self;
@@ -74,7 +74,7 @@
                     mimeType:(NSString *)mimeType{
 
     if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
-        _data = data;
+        self.data = data;
     }
     
     return self;
@@ -96,7 +96,7 @@
                     mimeType:(NSString *)mimeType{
 
     if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
-        _file = url;
+        self.file = url;
     }
     
     return self;
@@ -121,8 +121,8 @@
                      mimeType:(NSString *)mimeType{
 
     if (self = [super initWithName:name fileName:fileName mimeType:mimeType]) {
-        _inputStream = inputStream;
-        _offset = offset;
+        self.inputStream = inputStream;
+        self.offset = offset;
     }
     
     return self;

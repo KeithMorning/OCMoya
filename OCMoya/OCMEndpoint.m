@@ -68,13 +68,13 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
         return nil;
     }
     
-    _url = url;
-    _method = method;
-    _sampleResponseClosure = closure;
-    _urlParameters = urlParameters;
-    _bodyParameters = bodyParameters;
-    _parameterEncoding = encoding;
-    _httpHeaderFields = httpHeaderFields;
+    self.url = url;
+    self.method = method;
+    self.sampleResponseClosure = closure;
+    self.urlParameters = urlParameters;
+    self.bodyParameters = bodyParameters;
+    self.parameterEncoding = encoding;
+    self.httpHeaderFields = httpHeaderFields;
     
     return self;
 
@@ -253,8 +253,5 @@ typedef NSMutableDictionary<NSString *,NSString *> _M_httpHeaderType;
     return newRequest;
 }
 
-- (NSURLRequest *)adapt:(NSURLRequest *)request{
-    return self.urlRequest;
-}
 
 @end

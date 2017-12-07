@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSHTTPURLResponse *response;
 
+@property (nonatomic, strong) id<OCMTargetType> orignalTarget;
+
 @property (nonatomic, weak) NSURLSession *session;
 
 @property (nonatomic,assign) NSInteger retryCount;
@@ -30,12 +32,15 @@
 
 @implementation OCMRequestTask
 
-- (instancetype)initWithSession:(NSURLSession *)session requestTask:(NSURLSessionTask *)task{
+- (instancetype)initWithSession:(NSURLSession *)session
+                    requestTask:(NSURLSessionTask *)task
+                  orginalTarget:(id<OCMTargetType>)orignalTarget{
     
     if (self = [super init]) {
         _session = session;
         _task = task;
         _retryCount = 0;
+        _orignalTarget = orignalTarget;
         _lock = [NSRecursiveLock new];
     }
     

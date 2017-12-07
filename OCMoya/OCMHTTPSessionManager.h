@@ -29,6 +29,8 @@ typedef void(^progressClosure)(OCMProgressResponse *_Nullable uploadProgress);
 //if you
 @property (nonatomic,weak,nullable) id<OCMRequestRetrier> retrier;
 
+@property (nonatomic,weak,nullable) id<OCMTaskConvertible> taskConverter;
+
 
 /**
  whether to start requests immediately after being constructed, default is NO
@@ -38,18 +40,22 @@ typedef void(^progressClosure)(OCMProgressResponse *_Nullable uploadProgress);
 
 //HTTP request
 - (nullable OCMDataRequestTask *)dataTaskWithRequest:(nonnull NSURLRequest *)request
+                                              target:(nullable id<OCMTargetType>)target
                              uploadProgress:(nullable void (^)(OCMProgressResponse * _Nullable uploadProgress)) uploadProgress
                            downloadProgress:(nullable void (^)(OCMProgressResponse * _Nullable downloadProgress)) downloadProgress
                                           completion:(nullable void(^)(BOOL success, id _Nullable responseObject, OCMoyaError * _Nullable error))completionClosure;
 
 //upload reqeust
 - (nullable OCMDataRequestTask *)uploadDataTaskWithRequest:(nonnull NSURLRequest *)request
-                                   uploadProgress:(nullable progressClosure) uploadProgressClosure
-                                       completion:(nullable completionClosure)completionClosure;
+                                                    target:(nullable id<OCMTargetType>)target
+                                            uploadProgress:(nullable progressClosure) uploadProgressClosure
+                                                completion:(nullable completionClosure)completionClosure;
 
 
 - (void)retryWithTask:(nonnull OCMRequestTask *)task
                 error:(nullable OCMoyaError *)error
+               target:(nullable id<OCMTargetType>)target
+             response:(id)responseObj
        uploadProgress:(nullable progressClosure) uploadProgressClosure
      downloadProgress:(nullable progressClosure) downloadProgressClosure
            completion:(nullable completionClosure)completionClosure;
