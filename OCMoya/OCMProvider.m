@@ -241,8 +241,8 @@
             completion(NO,target.retryDelay);
         }
     }else{ // custom service error judge it from the service response
-        if (self.delegate && [self.delegate respondsToSelector:@selector(shouldRetryWithTaget:hasRetryCount:response:completion:)]) {
-            [self.delegate shouldRetryWithTaget:target hasRetryCount:task.retryCount response:responseObj completion:completion];
+        if (self.requestRetrier && [self.requestRetrier respondsToSelector:@selector(shouldRetryWithTaget:hasRetryCount:response:completion:)]) {
+            [self.requestRetrier shouldRetryWithTaget:target hasRetryCount:task.retryCount response:responseObj completion:completion];
         }else{
              completion(NO,target.retryDelay);
         }

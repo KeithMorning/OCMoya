@@ -34,7 +34,7 @@ typedef void(^Completion)(OCMResult<OCMResponse *,OCMoyaError *> *result);
 
 typedef void(^progressBlock)(OCMProgressResponse *progress);
 
-@protocol OCMProviderDelegate<NSObject>
+@protocol OCMProviderRetrier<NSObject>
 
 - (void)shouldRetryWithTaget:(id<OCMTargetType>)target hasRetryCount:(NSInteger)count response:(OCMResponse *)response completion:(void(^)(BOOL retry, NSTimeInterval delay))completionClosure;
 
@@ -52,7 +52,7 @@ typedef void(^progressBlock)(OCMProgressResponse *progress);
 
 @property (nonatomic,strong) OCMHTTPSessionManager *Manager;
 
-@property (nonatomic,weak) id<OCMProviderDelegate> delegate;
+@property (nonatomic,strong) id<OCMProviderRetrier> requestRetrier;
 
 - (instancetype)initWithEndpointClosure:(EndpointClosure)enpointClosure
                          requestClosure:(RequestClosure)requestClosure

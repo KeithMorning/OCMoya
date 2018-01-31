@@ -55,7 +55,7 @@ typedef void(^progressClosure)(OCMProgressResponse *_Nullable uploadProgress);
 - (void)retryWithTask:(nonnull OCMRequestTask *)task
                 error:(nullable OCMoyaError *)error
                target:(nullable id<OCMTargetType>)target
-             response:(id)responseObj
+             response:(nullable id)responseObj
        uploadProgress:(nullable progressClosure) uploadProgressClosure
      downloadProgress:(nullable progressClosure) downloadProgressClosure
            completion:(nullable completionClosure)completionClosure;
