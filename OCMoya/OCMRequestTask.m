@@ -53,7 +53,7 @@
     
     if (self.task) {
         [self.task resume];
-        if (!self.startTime) {
+        if (self.startTime == -1) {
             self.startTime = CFAbsoluteTimeGetCurrent();
         }
     }
