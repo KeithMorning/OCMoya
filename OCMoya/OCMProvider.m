@@ -235,7 +235,7 @@
     
     
     if (error) {//network or service error
-        if (task.retryCount < target.retryMaxCount) {
+        if (task.retryCount < target.retryMaxCount && error.errorcode != NSURLErrorCancelled) {
             completion(YES,target.retryDelay);
         }else{
             completion(NO,target.retryDelay);

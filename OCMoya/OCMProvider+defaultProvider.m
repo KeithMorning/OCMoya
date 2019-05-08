@@ -29,8 +29,7 @@
                           return [[OCMEndpointSampleResponse alloc] initWithStatusCode:200 data:target.sampleData error:nil];
                       }
                                      method:target.method
-                              urlParameters:target.urlParameters
-                             bodyParameters:target.bodyParameters
+                             parameters:target.parameters
                           parameterEncoding:target.parameterEncoding
                            httpHeaderFields:nil];
     if (target.parameterEncoding == OCMParameterEncodingMultiPartForm && [target.taskType isKindOfClass:[OCMoyaTargetUploadMultipartTask class]]) {

@@ -21,9 +21,7 @@
 
 @property (nonatomic,assign) OCMMethod method;
 
-@property (nonatomic,copy) NSDictionary<NSString *,id> *bodyParameters;
-
-@property (nonatomic,copy) NSDictionary<NSString *,id> *urlParameters;
+@property (nonatomic,copy) NSDictionary<NSString *,id> *parameters;
 
 @property (nonatomic,assign) OCMParameterEncoding parameterEncoding;
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OCMDefination.h"
 #import "OCMoyaError.h"
+#import "NSObject+HS_Coding.h"
 
 @interface OCMResponse : NSObject
 

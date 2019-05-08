@@ -38,9 +38,7 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 
 @property (nonatomic,copy,readonly) OCMEndpointSampleResponseClosure sampleResponseClosure;
 
-@property (nonatomic,copy,readonly) parameterType *urlParameters;
-
-@property (nonatomic,copy,readonly) parameterType *bodyParameters;
+@property (nonatomic,copy,readonly) parameterType *parameters;
 
 @property (nonatomic,assign,readonly) OCMParameterEncoding parameterEncoding;
 
@@ -51,15 +49,13 @@ typedef NSDictionary<NSString *,NSString *> httpHeaderType;
 - (instancetype)initWithURL:(nonnull NSString *)url
       sampleResponseClosure:(nullable OCMEndpointSampleResponseClosure)closure
                      method:(OCMMethod)method
-              urlParameters:(nullable NSDictionary<NSString *,id> *)urlParameters
-             bodyParameters:(nullable NSDictionary<NSString *,id> *)bodyParameters
+                 parameters:(nullable NSDictionary<NSString *,id> *)parameters
           parameterEncoding:(OCMParameterEncoding)encoding
            httpHeaderFields:(nullable NSDictionary<NSString *,NSString *> *)httpHeaderFields;
 
 - (nonnull OCMEndpoint *)addingHttpHeaderFields:(nullable httpHeaderType *)httpHeaderFields;
 
-- (nonnull OCMEndpoint *)addingURLParameters:(nullable parameterType *)urlParameters
-                              bodyParameters:(nullable parameterType *)bodyparameters
+- (nonnull OCMEndpoint *)addingParameters:(nullable parameterType *)parameters
                          httpHeaderFields:(nullable httpHeaderType *)httpHeaders;
 
 - (nonnull OCMEndpoint *)addingUpload:(nonnull OCMoyaTargetUploadMultipartTask *)targetTask;
